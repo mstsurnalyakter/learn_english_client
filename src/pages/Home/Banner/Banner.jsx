@@ -54,7 +54,7 @@ const Banner = () => {
             />
             <div className="absolute inset-0 text-gray-200 bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0.00)] flex flex-col items-center justify-center">
               <h1 className="md:text-4xl text-3xl w-5/6 text-center font-extrabold">
-                Master English with Expert Tutors
+                Learn English with Expert Tutors
               </h1>
               <p className="text-lg font-medium mt-6 w-5/6 mx-auto text-center">
                 Connect with certified tutors who will guide you on your journey

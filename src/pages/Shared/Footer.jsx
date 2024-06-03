@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="flex justify-center space-x-3 lg:justify-start">
             <div className="self-center gap-2 flex items-center text-lg md:text-2xl font-semibold">
               <img className="w-10" src={logo} alt="" />
-              <h2 className="mt-3">EnglishMastery</h2>
+              <h2 className="mt-3">LearnEnglish</h2>
             </div>
           </div>
         </div>
@@ -102,7 +102,7 @@ const Footer = () => {
                     />
                   </svg>
 
-                  <span>englishMastery@gmail.com</span>
+                  <span>learnEnglish@gmail.com</span>
                 </a>
               </li>
             </ul>
@@ -177,7 +177,7 @@ const Footer = () => {
       <div className="py-6 text-sm text-center dark:text-gray-600">
         <p className="text-black font-medium">
           Copyright © {new Date().getFullYear()} - All right reserved by{" "}
-          <span className="font-extrabold">EnglishMastery</span>
+          <span className="font-extrabold">LearnEnglish</span>
         </p>
       </div>
     </footer>

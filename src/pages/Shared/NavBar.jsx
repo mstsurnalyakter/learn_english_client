@@ -107,14 +107,13 @@ const NavBar = () => {
               <div className="flex items-center justify-center gap-1">
                 <img className="w-12 rounded-full " src={logo} alt="" />
                 <span className="text-black mt-3 font-extrabold text-xl">
-                  EnglishMastery
+                  LearnEnglish
                 </span>
               </div>
             </Link>
           </Typography>
           <div className="hidden gap-4 lg:flex items-center">
             <div>
-
               <div className="flex gap-2">
                 <>
                   <NavLink
