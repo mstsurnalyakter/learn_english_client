@@ -11,28 +11,23 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { Link, NavLink } from "react-router-dom";
-// import useAuth from "../../hooks/useAuth";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 
 
 const NavBar = () => {
   const [openNav, setOpenNav] = useState(false);
 
-  // const { user, logOut } = useAuth();
+  const { user, logOut } = useAuth();
 
-  // const handleLogOut = () => {
-  //   logOut()
-  //     .then(() => {})
-  //     .catch((error) => toast.error(error.message));
-  // };
-
-  const user = {
-    displayName: "Surnaly",
-    photoURL: "https://mst-surnaly-akte.imgbb.com",
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => toast.error(error.message));
   };
 
-  // const user = false;
+
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
   const element = document.documentElement;
@@ -103,13 +98,13 @@ const NavBar = () => {
       <Navbar className="mx-auto max-w-7xl  shadow-none rounded-none px-3 lg:px-2 pt-4  mb-6 lg:py-5">
         <div className="flex items-center justify-between">
           <Typography className="mr-4 cursor-pointer py-1.5 lg:ml-2 flex items-center">
-            <Link to={"/"}>
-              <div className="flex items-center justify-center gap-1">
+            <Link to={"/"} className="flex items-center justify-center gap-1">
+
                 <img className="w-12 rounded-full " src={logo} alt="" />
                 <span className="text-black mt-3 font-extrabold text-xl">
                   LearnEnglish
                 </span>
-              </div>
+              
             </Link>
           </Typography>
           <div className="hidden gap-4 lg:flex items-center">
@@ -149,7 +144,7 @@ const NavBar = () => {
                         content={user?.displayName}
                       />
                       <button
-                        // onClick={() => handleLogOut()}
+                        onClick={() => handleLogOut()}
                         className="bg-[#E3B342] px-3 py-1 flex items-center justify-center  text-black font-medium  rounded-lg"
                       >
                         Logout
@@ -280,7 +275,7 @@ const NavBar = () => {
                       content={user?.displayName}
                     />
                     <button
-                      // onClick={() => handleLogOut()}
+                      onClick={() => handleLogOut()}
                       className="bg-[#E3B342] px-3 py-1 flex items-center justify-center  text-white  rounded-lg"
                     >
                       Logout

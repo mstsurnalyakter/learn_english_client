@@ -1,23 +1,31 @@
 import { useEffect, useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import logo from "logo.png";
-// import registerBg from "/register.jfif";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "/logo.png";
+import authImage from '../../../assets/authImage.jfif'
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import DynamicTitle from "../../../components/Shared/DynamicTitle/DynamicTitle";
 import useAuth from "../../../hooks/useAuth";
+import { imageUpload } from "../../../api/utils";
+import { TbFidgetSpinner } from "react-icons/tb";
+
 
 
 const SingUp = () => {
   const [toggle, setToggle] = useState(false);
-  const { createUser, updateUserProfile, googleLogin, user, setUser } =
-    useAuth();
+
+  const {
+    createUser,
+    signInWithGoogle,
+    updateUserProfile,
+    loading,
+    setLoading,
+  } = useAuth();
 
   // navigate user
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location?.state || "/";
+
 
   const {
     register,
@@ -46,41 +54,49 @@ const SingUp = () => {
   ]);
 
   const onSubmit = async (data) => {
-    const { name, email, photo, password } = data;
-    console.log(name, email, photo, password);
+    const { name, email, photo, password, role } = data;
+    console.log(name, email, photo, password, role);
+
 
     try {
-      const result = await createUser(email, password);
-      await updateUserProfile(name, photo);
-      setUser({ ...user, photoURL: photo, displayName: name });
-      if (result) {
-        toast.success("Successfully Register!");
+      // 1. upload image and get image url
+      setLoading(true);
 
-        setTimeout(() => {
-          navigate(from);
-          window.location.reload();
-        }, 2000);
+      const imageURL = await imageUpload(photo[0]);
+      console.log(imageURL);
+
+      //2.user registration
+      const result = await createUser(email, password);
+      console.log(result);
+
+      //3.update user profile
+      await updateUserProfile(name, imageURL);
+      if (result) {
+          toast.success("Sign Up Successful");
+          setTimeout(() => {
+             navigate("/");
+           window.location.reload();
+         }, 2000);
       }
+
     } catch (error) {
-      toast.error(
-        error?.message?.split("(")[1].replace(")", "").split("/")[1] ||
-          "An error occurred while registering."
-      );
+      toast.error(error.message);
     }
   };
 
-  const handleSocialLogin = async () => {
+  // handle google sign in
+  const handleGoogleSignIn = async () => {
     try {
-      const result = await googleLogin();
-      if (result?.user) {
-        toast.success("SignIn with Google Successful");
-        setTimeout(() => {
-          navigate(from);
-          window.location.reload();
-        }, 2000);
-      }
+     const result = await signInWithGoogle();
+     if (result?.user) {
+         toast.success("Sign In with Google successful.");
+         navigate("/");
+        //   setTimeout(() => {
+        //     window.location.reload();
+        //   }, 2000);
+     }
     } catch (error) {
-      toast.error(error?.message);
+      toast.error(error.message);
     }
   };
 
@@ -98,7 +114,7 @@ const SingUp = () => {
           </p>
 
           <div
-            onClick={handleSocialLogin}
+            onClick={handleGoogleSignIn}
             className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 "
           >
             <div className="px-4 py-2">
@@ -170,7 +186,7 @@ const SingUp = () => {
                 autoComplete="photo"
                 name="photo"
                 className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
-                type="url"
+                type="file"
                 {...register("photo", {
                   required: {
                     value: true,
@@ -178,6 +194,21 @@ const SingUp = () => {
                   },
                 })}
               />
+            </div>
+            <div className="mt-4">
+              <select
+                name="role"
+                id="role"
+                className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
+                type="text"
+                placeholder="Select Role"
+                {...register("role", { required: true })}
+              >
+                <option value="">Select Role</option>
+                <option value="student">Student</option>
+                <option value="tutor">Tutor</option>
+                <option value="admin">Admin</option>
+              </select>
             </div>
             <div className="mt-4">
               <label
@@ -264,9 +295,13 @@ const SingUp = () => {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-[#4D95EA] rounded-lg hover:bg-[#2f86eb] focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
               >
-                Register
+                {loading ? (
+                  <TbFidgetSpinner className="animate-spin m-auto" />
+                ) : (
+                  "Sign Up"
+                )}
               </button>
             </div>
           </form>
@@ -287,7 +322,7 @@ const SingUp = () => {
         <div
           className="hidden bg-cover bg-center lg:block lg:w-1/2"
           style={{
-            backgroundImage: `url(${registerBg})`,
+            backgroundImage: `url(${authImage})`,
           }}
         ></div>
       </div>
