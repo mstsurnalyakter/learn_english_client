@@ -9,7 +9,7 @@ import DynamicTitle from "../../../components/Shared/DynamicTitle/DynamicTitle";
 import useAuth from "../../../hooks/useAuth";
 import { imageUpload } from "../../../api/utils";
 import { TbFidgetSpinner } from "react-icons/tb";
-
+import { FaGithub } from "react-icons/fa";
 
 
 const SingUp = () => {
@@ -21,6 +21,7 @@ const SingUp = () => {
     updateUserProfile,
     loading,
     setLoading,
+    signInWithGitHub,
   } = useAuth();
 
   // navigate user
@@ -91,14 +92,20 @@ const SingUp = () => {
      if (result?.user) {
          toast.success("Sign In with Google successful.");
          navigate("/");
-        //   setTimeout(() => {
-        //     window.location.reload();
-        //   }, 2000);
      }
     } catch (error) {
       toast.error(error.message);
     }
   };
+    const handleGithubSignIn = async () => {
+      try {
+        await signInWithGitHub();
+        navigate("/");
+        toast.success("Sign In with GitHub successful.");
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-306px)]">
@@ -140,6 +147,19 @@ const SingUp = () => {
 
             <span className="w-5/6 px-4 py-3 font-bold text-center">
               Sign in with Google
+            </span>
+          </div>
+
+          <div
+            onClick={handleGithubSignIn}
+            className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 "
+          >
+            <div className="px-4 py-2">
+              <FaGithub />
+            </div>
+
+            <span className="w-5/6 px-4 py-3 font-bold text-center">
+              Sign in with GitHub
             </span>
           </div>
 

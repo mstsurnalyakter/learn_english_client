@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import logo from "/logo.png";
-// import registerBg from "/register.jfif";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-// import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
-// import DynamicTitle from "../../components/DynamicTitle";
 import { TbFidgetSpinner } from "react-icons/tb";
 import authImage from "../../../assets/authImage.jfif";
 import useAuth from "../../../hooks/useAuth";
 import DynamicTitle from "../../../components/Shared/DynamicTitle/DynamicTitle";
+import { FaGithub } from "react-icons/fa";
 
 const Login = () => {
   const [toggle, setToggle] = useState(false);
-  //   const { signIn, googleLogin } = useAuth();
-  const { signIn, signInWithGoogle, loading, setLoading, resetPassword } =
+  const { signIn, signInWithGoogle,signInWithGitHub, loading, setLoading, resetPassword } =
     useAuth();
 
   // navigate user
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state || "/";
-  const [email, setEmail] = useState("");
+//   const [email, setEmail] = useState("");
 
   const {
     register,
@@ -78,6 +75,16 @@ const Login = () => {
       toast.error(error.message);
     }
   };
+  // handle google sign in
+  const handleGithubSignIn = async () => {
+    try {
+      await signInWithGitHub();
+      navigate(from);
+      toast.success("Sign In with GitHub successful.");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
 
 
@@ -122,6 +129,19 @@ const Login = () => {
 
             <span className="w-5/6 px-4 py-3 font-bold text-center">
               Sign in with Google
+            </span>
+          </div>
+          <div
+            onClick={handleGithubSignIn}
+            className="flex cursor-pointer items-center justify-center mt-4 text-gray-600 transition-colors duration-300 transform border rounded-lg   hover:bg-gray-50 "
+          >
+            <div className="px-4 py-2">
+                <FaGithub />
+
+            </div>
+
+            <span className="w-5/6 px-4 py-3 font-bold text-center">
+              Sign in with GitHub
             </span>
           </div>
 
