@@ -9,20 +9,19 @@ import DynamicTitle from "../../../components/Shared/DynamicTitle/DynamicTitle";
 import useAuth from "../../../hooks/useAuth";
 import { imageUpload } from "../../../api/utils";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { FaGithub } from "react-icons/fa";
-import SocialLogin from "../../../components/Shared/DynamicTitle/SocialLogin";
+import useAxiosCommon from "../../../hooks/useAxiosCommon";
+import SocialLogin from "../../../components/Shared/SocialLogin/SocialLogin";
 
 
 const SingUp = () => {
   const [toggle, setToggle] = useState(false);
+  const axiosCommon = useAxiosCommon()
 
   const {
     createUser,
-    signInWithGoogle,
     updateUserProfile,
     loading,
     setLoading,
-    signInWithGitHub,
   } = useAuth();
 
   // navigate user
@@ -73,13 +72,33 @@ const SingUp = () => {
 
       //3.update user profile
       await updateUserProfile(name, imageURL);
-      if (result) {
-          toast.success("Sign Up Successful");
-          setTimeout(() => {
-             navigate("/");
-           window.location.reload();
-         }, 2000);
+
+      const userInfo = {
+        name,
+        email,
+        imageURL,
+        role,
       }
+
+      const { data } = await axiosCommon.put("/users", userInfo);
+
+      console.log(data);
+
+      if (data?.upsertedCount > 0 || data?.modifiedCount > 0) {
+            toast.success("Sign Up Successful");
+            setTimeout(() => {
+              navigate("/");
+              window.location.reload();
+            }, 2000);
+      }
+
+      // if (result) {
+        //   toast.success("Sign Up Successful");
+        //   setTimeout(() => {
+        //      navigate("/");
+        //    window.location.reload();
+        //  }, 2000);
+      // }
 
     } catch (error) {
       toast.error(error.message);

@@ -8,7 +8,9 @@ import { TbFidgetSpinner } from "react-icons/tb";
 import authImage from "../../../assets/authImage.jfif";
 import useAuth from "../../../hooks/useAuth";
 import DynamicTitle from "../../../components/Shared/DynamicTitle/DynamicTitle";
-import SocialLogin from "../../../components/Shared/DynamicTitle/SocialLogin";
+import SocialLogin from "../../../components/Shared/SocialLogin/SocialLogin";
+
+
 
 const Login = () => {
   const [toggle, setToggle] = useState(false);

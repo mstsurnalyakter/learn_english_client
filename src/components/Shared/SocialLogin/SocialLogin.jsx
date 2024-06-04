@@ -1,8 +1,8 @@
 
 import toast from 'react-hot-toast';
-import useAuth from '../../../hooks/useAuth';
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
+import useAuth from '../../../hooks/useAuth';
 
 const SocialLogin = () => {
   const { signInWithGoogle, signInWithGitHub } = useAuth();
