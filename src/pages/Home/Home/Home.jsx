@@ -1,4 +1,5 @@
 import Banner from "../Banner/Banner";
+import StudySession from "../StudySession/StudySession";
 import Tutor from "../Tutor/Tutor";
 
 
@@ -7,6 +8,7 @@ const Home = () => {
     <div className="space-y-20 dark:text-gray-100">
       <Banner/>
       <Tutor/>
+      <StudySession/>
     </div>
   );
 }

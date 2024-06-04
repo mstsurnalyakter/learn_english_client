@@ -1,4 +1,6 @@
-import TutorCard from '../../../components/TutorCard/TutorCard'
+
+
+import TutorCard from "../../../components/Card/TutorCard/TutorCard";
 
 const Tutor = () => {
   return (
