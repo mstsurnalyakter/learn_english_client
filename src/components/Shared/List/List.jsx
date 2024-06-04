@@ -11,7 +11,7 @@ const List = ({ label, address, icon: Icon }) => {
         end
         className={({ isActive }) =>
           `flex items-center p-2 space-x-3 font-bold text-gray-900 rounded-md ${
-            isActive ? "rounded-sm dark:bg-gray-100  dark:text-gray-900" : ""
+            isActive ? "rounded-sm bg-gray-100" : ""
           }`
         }
       >

@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       },
       {
         path: "upload-materials",
-        element:<UploadMaterials/>
+        element: <UploadMaterials />,
       },
       // admin routes
       // {},
