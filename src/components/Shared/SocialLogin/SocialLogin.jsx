@@ -3,9 +3,11 @@ import toast from 'react-hot-toast';
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import useAuth from '../../../hooks/useAuth';
+import useAxiosCommon from '../../../hooks/useAxiosCommon';
 
 const SocialLogin = () => {
   const { signInWithGoogle, signInWithGitHub } = useAuth();
+  const axiosCommon = useAxiosCommon();
 
   // navigate user
   const navigate = useNavigate();
@@ -15,7 +17,17 @@ const SocialLogin = () => {
   // handle google sign in
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+    const {user} = await signInWithGoogle();
+
+     const userInfo = {
+       name: user?.displayName,
+       email: user?.email,
+       imageURL: user?.photoURL,
+       role: "student",
+     };
+
+      await axiosCommon.put("/users", userInfo);
+
       navigate(from);
       toast.success("Sign In with Google successful.");
     } catch (error) {
