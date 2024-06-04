@@ -37,7 +37,21 @@ const SocialLogin = () => {
   // handle google sign in
   const handleGithubSignIn = async () => {
     try {
-      await signInWithGitHub();
+     const {user} = await signInWithGitHub();
+
+     console.log("github login",user);
+
+
+     const userInfo = {
+       name: user?.displayName,
+       email: user?.email,
+       imageURL: user?.photoURL,
+       role: "student",
+     };
+
+     await axiosCommon.put("/users", userInfo);
+
+
       navigate(from);
       toast.success("Sign In with GitHub successful.");
     } catch (error) {
