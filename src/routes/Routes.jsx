@@ -8,6 +8,9 @@ import BookedSession from "../pages/Dashboard/Student/BookedSession/BookedSessio
 import CreateNote from "../pages/Dashboard/Student/CreateNote/CreateNote";
 import ManageNotes from "../pages/Dashboard/Student/ManageNotes/ManageNotes";
 import StudyMaterials from "../pages/Dashboard/Student/StudyMaterials/StudyMaterials";
+import CreateStudySession from "../pages/Dashboard/Tutor/CreateStudySession/CreateStudySession";
+import ViewAllMaterials from "../pages/Dashboard/Tutor/ViewAllMaterials/ViewAllMaterials";
+import UploadMaterials from "../pages/Dashboard/Tutor/UploadMaterials/UploadMaterials";
 
 const router = createBrowserRouter([
   {
@@ -47,10 +50,21 @@ const router = createBrowserRouter([
       },
       {
         path: "study-materials",
-        element:<StudyMaterials/>
+        element: <StudyMaterials />,
       },
       // tutor routes
-      // {},
+      {
+        path: "create-study-session",
+        element: <CreateStudySession />,
+      },
+      {
+        path: "view-all-materials",
+        element: <ViewAllMaterials />,
+      },
+      {
+        path: "upload-materials",
+        element:<UploadMaterials/>
+      },
       // admin routes
       // {},
     ],
