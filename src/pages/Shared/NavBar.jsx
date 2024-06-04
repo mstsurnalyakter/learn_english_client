@@ -99,12 +99,10 @@ const NavBar = () => {
         <div className="flex items-center justify-between">
           <Typography className="mr-4 cursor-pointer py-1.5 lg:ml-2 flex items-center">
             <Link to={"/"} className="flex items-center justify-center gap-1">
-
-                <img className="w-12 rounded-full " src={logo} alt="" />
-                <span className="text-black mt-3 font-extrabold text-xl">
-                  LearnEnglish
-                </span>
-              
+              <img className="w-12 rounded-full " src={logo} alt="" />
+              <span className="text-black mt-3 font-extrabold text-xl">
+                LearnEnglish
+              </span>
             </Link>
           </Typography>
           <div className="hidden gap-4 lg:flex items-center">
@@ -124,7 +122,7 @@ const NavBar = () => {
                   {user && (
                     <>
                       <NavLink
-                        to={"/dashboard "}
+                        to={"/dashboard"}
                         className={({ isActive }) =>
                           isActive
                             ? "bg-[#4D95EA] px-3 py-1 flex items-center justify-center  text-white  rounded-lg"
