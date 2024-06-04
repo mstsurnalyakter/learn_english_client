@@ -18,7 +18,7 @@ const TutorCard = () => {
         <div className="space-y-4 text-center divide-y dark:divide-gray-300">
           <div className="my-2 space-y-1">
             <h2 className="text-xl font-semibold sm:text-2xl">Alex</h2>
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center justify-center gap-6">
               {/* kkkkkkkk */}
               <div className="flex items-center gap-2">
                 <span className="text-orange-800">
@@ -28,10 +28,11 @@ const TutorCard = () => {
               </div>
               {/* kkkkkkkk */}
               <div className="flex items-center gap-2">
+
                 <span>
                   <MdRateReview />
                 </span>
-                777777
+                777777 reviews
               </div>
             </div>
             <p className="px-5 text-xs sm:text-base dark:text-gray-600">
