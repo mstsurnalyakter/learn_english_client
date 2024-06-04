@@ -4,27 +4,25 @@ import NavLinks from "../Student/NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import logo from "/logo.png";
 
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { Collapse, IconButton } from "@material-tailwind/react";
 
-const Sidebar = () => {
-     //TODO: get isAdmin value from the database
-    const isStudent = true;
+export const SideBarItem = () => {
   return (
-    <div className="flex flex-col justify-between -ml-7 lg:-ml-0 p-3 w-60 min-h-screen bg-[#4D95EA]">
+    <div className="flex flex-col justify-between   p-3  lg:min-h-screen bg-[#4D95EA] items-center">
       <div className="space-y-3">
         <Link
           to={"/"}
           className="flex items-center justify-center gap-1  pb-3 border-b-2 text-gray-900"
         >
           <img className="w-12 rounded-full " src={logo} alt="" />
-          <span className="mt-3 font-extrabold text-xl">
-            LearnEnglish
-          </span>
+          <span className="mt-3 font-extrabold text-xl">LearnEnglish</span>
         </Link>
-
         <div className="flex-1">
           <ul className="pt-2 pb-4 space-y-1 text-sm">
             <List label="Home" address="/" icon={FaHome} />
-            {isStudent && <NavLinks />}
+            <NavLinks />
           </ul>
         </div>
       </div>
@@ -72,6 +70,44 @@ const Sidebar = () => {
       {/* <div></div> */}
     </div>
   );
-}
+};
 
-export default Sidebar
+const Sidebar = () => {
+  //TODO: get isAdmin value from the database
+  //   const isStudent = true;
+  const [openNav, setOpenNav] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpenNav(false)
+    );
+  }, []);
+
+  return (
+    <div className="">
+      <div className="hidden lg:block">
+        <SideBarItem />
+      </div>
+
+      <IconButton
+        variant="text"
+        color="blue-gray"
+        className="lg:hidden ml-12"
+        onClick={() => setOpenNav(!openNav)}
+      >
+        {openNav ? (
+          <XMarkIcon className="h-6 w-6 " strokeWidth={2} />
+        ) : (
+          <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+        )}
+      </IconButton>
+
+      <Collapse open={openNav}>
+        <SideBarItem />
+      </Collapse>
+    </div>
+  );
+};
+
+export default Sidebar;

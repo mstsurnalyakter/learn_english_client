@@ -1,19 +1,20 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
+
+
 const Dashboard = () => {
   return (
-    <div className="relative min-h-screen w-full md:flex lg:mx-auto lg:max-w-7xl px-7 lg:px-2">
-      {/* sidebar */}
-      <Sidebar/>
-
-      {/* dashboard content */}
-      <div className="flex-1 mt-10 md:ml-64">
-        <div className="p-5">
+    <>
+      <div className="grid grid-cols-1  lg:grid-cols-8 mx-auto max-w-7xl">
+        <div className="lg:col-span-2">
+          <Sidebar />
+        </div>
+        <div className="lg:col-span-6 space-y-20 ml-10 mt-10">
           <Outlet />
         </div>
       </div>
-    </div>
+    </>
   );
-};
+}
 
-export default Dashboard;
+export default Dashboard
