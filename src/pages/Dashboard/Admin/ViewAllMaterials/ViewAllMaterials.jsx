@@ -1,0 +1,7 @@
+const ViewAllMaterials = () => {
+  return (
+    <div>ViewAllMaterials</div>
+  )
+}
+
+export default ViewAllMaterials

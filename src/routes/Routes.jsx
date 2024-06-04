@@ -11,6 +11,10 @@ import StudyMaterials from "../pages/Dashboard/Student/StudyMaterials/StudyMater
 import CreateStudySession from "../pages/Dashboard/Tutor/CreateStudySession/CreateStudySession";
 import ViewAllMaterials from "../pages/Dashboard/Tutor/ViewAllMaterials/ViewAllMaterials";
 import UploadMaterials from "../pages/Dashboard/Tutor/UploadMaterials/UploadMaterials";
+import ViewAllUsers from "../pages/Dashboard/Admin/ViewAllUsers/ViewAllUsers";
+import ViewAllStudySession from "../pages/Dashboard/Admin/ViewAllStudySession/ViewAllStudySession";
+import AllMaterials from "../pages/Dashboard/Admin/ViewAllMaterials/ViewAllMaterials";
+
 
 const router = createBrowserRouter([
   {
@@ -66,7 +70,18 @@ const router = createBrowserRouter([
         element: <UploadMaterials />,
       },
       // admin routes
-      // {},
+      {
+        path: "view-all-users",
+        element: <ViewAllUsers />,
+      },
+      {
+        path: "view-all-study-session",
+        element: <ViewAllStudySession />,
+      },
+      {
+        path: "view-all-materials",
+        element: <AllMaterials />,
+      },
     ],
   },
 ]);

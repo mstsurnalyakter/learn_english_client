@@ -8,11 +8,13 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Collapse, IconButton } from "@material-tailwind/react";
 import TutorNavLinks from "../Tutor/NavLinks/NavLinks";
+import AdminNavLinks from "../Admin/NavLinks/NavLinks";
 
 export const SideBarItem = () => {
 
   const isStudent = false;
-  const isTutor = true;
+  const isTutor = false;
+  const isAdmin = true;
 
   return (
     <div className="flex flex-col justify-between   p-3  lg:min-h-screen bg-[#4D95EA] items-center">
@@ -29,6 +31,7 @@ export const SideBarItem = () => {
             <List label="Home" address="/" icon={FaHome} />
             {isStudent && <NavLinks />}
             {isTutor && <TutorNavLinks />}
+            {isAdmin && <AdminNavLinks />}
           </ul>
         </div>
       </div>
