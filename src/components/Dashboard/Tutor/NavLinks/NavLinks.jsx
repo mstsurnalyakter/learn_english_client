@@ -1,8 +1,8 @@
 
 import { FaPen } from "react-icons/fa6";
-import { IoDocument } from "react-icons/io5";
 import List from "../../../Shared/List/List"
 import { IoIosCreate } from "react-icons/io";
+import { FaDiscourse } from "react-icons/fa";
 
 const NavLinks = () => {
   return (
@@ -13,9 +13,9 @@ const NavLinks = () => {
         icon={IoIosCreate}
       />
       <List
-        label="View All Materials"
-        address="/dashboard/view-all-materials"
-        icon={IoDocument}
+        label="view all Study Session"
+        address="/dashboard/view-all-study-sessions"
+        icon={FaDiscourse}
       />
       <List
         label="Upload Materials"

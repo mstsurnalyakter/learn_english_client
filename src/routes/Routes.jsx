@@ -7,13 +7,13 @@ import Dashboard from "../layouts/Dashboard";
 import BookedSession from "../pages/Dashboard/Student/BookedSession/BookedSession";
 import CreateNote from "../pages/Dashboard/Student/CreateNote/CreateNote";
 import ManageNotes from "../pages/Dashboard/Student/ManageNotes/ManageNotes";
-import StudyMaterials from "../pages/Dashboard/Student/StudyMaterials/StudyMaterials";
 import CreateStudySession from "../pages/Dashboard/Tutor/CreateStudySession/CreateStudySession";
-import ViewAllMaterials from "../pages/Dashboard/Tutor/ViewAllMaterials/ViewAllMaterials";
 import UploadMaterials from "../pages/Dashboard/Tutor/UploadMaterials/UploadMaterials";
 import ViewAllUsers from "../pages/Dashboard/Admin/ViewAllUsers/ViewAllUsers";
 import ViewAllStudySession from "../pages/Dashboard/Admin/ViewAllStudySession/ViewAllStudySession";
-import AllMaterials from "../pages/Dashboard/Admin/ViewAllMaterials/ViewAllMaterials";
+import ViewAllMaterials from "../pages/Dashboard/Common/ViewAllMaterials/ViewAllMaterials";
+import ViewAllStudySessions from "../pages/Dashboard/Tutor/ViewAllStudySessions/ViewAllStudySessions";
+
 
 
 const router = createBrowserRouter([
@@ -39,6 +39,11 @@ const router = createBrowserRouter([
     path: "dashboard",
     element: <Dashboard />,
     children: [
+      // common route
+      {
+        index: true,
+        element: <ViewAllMaterials />,
+      },
       // student routes
       {
         path: "booked-session",
@@ -52,22 +57,18 @@ const router = createBrowserRouter([
         path: "manage-notes",
         element: <ManageNotes />,
       },
-      {
-        path: "study-materials",
-        element: <StudyMaterials />,
-      },
       // tutor routes
       {
         path: "create-study-session",
         element: <CreateStudySession />,
       },
       {
-        path: "view-all-materials",
-        element: <ViewAllMaterials />,
-      },
-      {
         path: "upload-materials",
         element: <UploadMaterials />,
+      },
+      {
+        path: "view-all-study-sessions",
+        element:<ViewAllStudySessions/>
       },
       // admin routes
       {
@@ -77,10 +78,6 @@ const router = createBrowserRouter([
       {
         path: "view-all-study-session",
         element: <ViewAllStudySession />,
-      },
-      {
-        path: "view-all-materials",
-        element: <AllMaterials />,
       },
     ],
   },

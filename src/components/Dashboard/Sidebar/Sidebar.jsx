@@ -1,5 +1,5 @@
 import List from "../../Shared/List/List";
-import { FaHome } from "react-icons/fa";
+import { FaBookOpen, FaHome } from "react-icons/fa";
 import NavLinks from "../Student/NavLinks/NavLinks";
 import { Link } from "react-router-dom";
 import logo from "/logo.png";
@@ -13,8 +13,8 @@ import AdminNavLinks from "../Admin/NavLinks/NavLinks";
 export const SideBarItem = () => {
 
   const isStudent = false;
-  const isTutor = false;
-  const isAdmin = true;
+  const isTutor = true;
+  const isAdmin = false;
 
   return (
     <div className="flex flex-col justify-between   p-3  lg:min-h-screen bg-[#4D95EA] items-center">
@@ -29,6 +29,12 @@ export const SideBarItem = () => {
         <div className="flex-1">
           <ul className="pt-2 pb-4 space-y-1 text-sm">
             <List label="Home" address="/" icon={FaHome} />
+            <List
+              label="View All Materials"
+              address="/dashboard"
+              icon={FaBookOpen}
+            />
+
             {isStudent && <NavLinks />}
             {isTutor && <TutorNavLinks />}
             {isAdmin && <AdminNavLinks />}
