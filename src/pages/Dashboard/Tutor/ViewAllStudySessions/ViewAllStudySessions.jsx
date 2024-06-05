@@ -1,6 +1,8 @@
+import toast from "react-hot-toast";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useStudySession from "../../../../hooks/useStudySession";
 import { IoIosGitPullRequest } from "react-icons/io";
+import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 const ViewAllStudySessions = () => {
   const axiosSecure = useAxiosSecure();
@@ -11,12 +13,18 @@ const ViewAllStudySessions = () => {
     const { data } = await axiosSecure.patch(`/study-session/${id}`, {
       status: "pending",
     });
-    console.log(data);
-    refetch();
-    // getData();
+    if (data?.modifiedCount > 0) {
+      toast.success("New Approval Request Successfully Send");
+
+      refetch();
+      console.log(data);
+    }
   };
 
-  console.log(studySession);
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
+
   return (
     <div>
       <section className="container px-4 mx-auto pt-12">
@@ -149,7 +157,7 @@ const ViewAllStudySessions = () => {
                             <button
                               disabled={session?.status !== "rejected"}
                               onClick={() => handleStatus(session?._id)}
-                              title="Send New Approval Request "
+                              title="New Approval Request"
                               className="text-gray-800 transition-colors duration-200  hover:text-red-800 focus:outline-none disabled:cursor-not-allowed"
                             >
                               <IoIosGitPullRequest />
