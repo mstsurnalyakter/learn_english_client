@@ -210,31 +210,6 @@ const NavBar = () => {
         </div>
 
         <Collapse open={openNav}>
-          {/* <NavList /> */}
-          <>
-            <NavLink
-              to={"/"}
-              className={({ isActive }) =>
-                isActive
-                  ? "bg-[#4D95EA] px-3 py-1  text-white  rounded-lg"
-                  : "p-2 text-[#131313CC]"
-              }
-            >
-              Home
-            </NavLink>
-            {user && (
-              <NavLink
-                to={"/dashboard "}
-                className={({ isActive }) =>
-                  isActive
-                    ? "bg-[#4D95EA] px-3 py-1 flex items-center justify-center  text-white  rounded-lg"
-                    : "p-2 text-[#131313CC]"
-                }
-              >
-                Dashboard
-              </NavLink>
-            )}
-          </>
 
           <div className="flex items-center justify-center"></div>
           <div className="">
@@ -253,7 +228,7 @@ const NavBar = () => {
                 {user && (
                   <>
                     <NavLink
-                      to={"/dashboard "}
+                      to={"/dashboard"}
                       className={({ isActive }) =>
                         isActive
                           ? "bg-[#4D95EA] px-3 py-1 flex items-center justify-center  text-white  rounded-lg"

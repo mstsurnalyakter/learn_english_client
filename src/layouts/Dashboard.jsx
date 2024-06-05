@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -13,6 +14,7 @@ const Dashboard = () => {
         <div className="lg:col-span-6 space-y-20 ml-10 mt-10">
           <Outlet />
         </div>
+        <Toaster/>
       </div>
     </>
   );
