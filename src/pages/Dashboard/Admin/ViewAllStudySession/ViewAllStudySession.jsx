@@ -1,27 +1,17 @@
 import toast from "react-hot-toast";
 import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
-import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { MdModeEdit } from "react-icons/md";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
+import useAllStudySession from "../../../../hooks/useAllStudySession";
 
 const ViewAllStudySession = () => {
-  const { loading } = useAuth();
+
+  const {studySessions,isLoading,refetch} = useAllStudySession()
+
   const axiosSecure = useAxiosSecure();
 
-  const {
-    data: studySessions = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["studySessions"],
-    enabled: !loading && !!localStorage.getItem("access-token"),
-    queryFn: async () => {
-      const { data } = await axiosSecure(`/study-sessions`);
-      return data;
-    },
-  });
+
 
   // handleStatus
   const handleStatus = async (id, prevStatus, status) => {

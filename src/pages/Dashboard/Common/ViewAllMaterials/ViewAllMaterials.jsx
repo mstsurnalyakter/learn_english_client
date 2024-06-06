@@ -5,8 +5,8 @@ import TutorViewAllMaterials from "../../Tutor/TutorViewAllMaterials/TutorViewAl
 
 const ViewAllMaterials = () => {
       const isStudent = false;
-      const isTutor = false;
-      const isAdmin = true;
+      const isTutor = true;
+      const isAdmin = false;
   return (
     <>
     {isStudent && <StudentViewAllMaterials/>}

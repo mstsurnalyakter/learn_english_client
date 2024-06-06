@@ -13,8 +13,8 @@ import AdminNavLinks from "../Admin/NavLinks/NavLinks";
 export const SideBarItem = () => {
 
   const isStudent = false;
-  const isTutor = false;
-  const isAdmin = true;
+  const isTutor = true;
+  const isAdmin = false;
 
   return (
     <div className="flex flex-col justify-between   p-3  lg:min-h-screen bg-[#4D95EA] items-center">

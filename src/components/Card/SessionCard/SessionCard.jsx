@@ -1,23 +1,20 @@
 import PropTypes from 'prop-types'
-import session1 from '../../../assets/session1.png'
 
-const SessionCard = () => {
+const SessionCard = ({session}) => {
   return (
     <div>
       <div className="w-full rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800 border-2 p-3">
         <img
-          src={session1}
+          src={session?.imageURL}
           alt=""
           className="object-cover object-center w-full rounded-t-md  dark:bg-gray-500"
         />
         <div className="flex flex-col justify-between p-6 space-y-8">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-semibold tracking-wide">
-              Donec lectus leo
+          <div className="space-y-2 flex-grow">
+            <h2 className="text-lg font-medium">
+              {session?.sessionTitle}
             </h2>
-            <p className="dark:text-gray-800">
-              Curabitur luctus erat nunc, sed ullamcorper erat vestibulum eget.
-            </p>
+            <p className="dark:text-gray-800 text-sm">{session?.sessionDescription.slice(0,150)}</p>
           </div>
           <button
             type="button"
@@ -31,6 +28,8 @@ const SessionCard = () => {
   );
 }
 
-SessionCard.propTypes = {}
+SessionCard.propTypes = {
+  session:PropTypes.object
+}
 
 export default SessionCard
