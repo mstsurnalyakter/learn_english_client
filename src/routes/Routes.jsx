@@ -13,6 +13,7 @@ import ViewAllUsers from "../pages/Dashboard/Admin/ViewAllUsers/ViewAllUsers";
 import ViewAllStudySession from "../pages/Dashboard/Admin/ViewAllStudySession/ViewAllStudySession";
 import ViewAllMaterials from "../pages/Dashboard/Common/ViewAllMaterials/ViewAllMaterials";
 import ViewAllStudySessions from "../pages/Dashboard/Tutor/ViewAllStudySessions/ViewAllStudySessions";
+import SessionDetail from "../pages/SessionDetail/SessionDetail";
 
 
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/sessionDetail/:id",
+        element:<SessionDetail/>
       },
     ],
   },
@@ -68,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: "view-all-study-sessions",
-        element:<ViewAllStudySessions/>
+        element: <ViewAllStudySessions />,
       },
       // admin routes
       {
