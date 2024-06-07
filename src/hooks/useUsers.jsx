@@ -8,7 +8,7 @@ const useUsers = () => {
 
      const {
        data: users = [],
-       isLoading,
+       userLoading,
        refetch,
      } = useQuery({
        queryKey: ["users"],
@@ -18,7 +18,7 @@ const useUsers = () => {
          return data;
        },
      });
-  return {users,isLoading,refetch}
+  return { users, userLoading, refetch };
 }
 
 export default useUsers

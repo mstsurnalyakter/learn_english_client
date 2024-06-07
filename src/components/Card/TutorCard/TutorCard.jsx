@@ -4,20 +4,20 @@ import { FaStar } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
 import { PiCertificateFill } from "react-icons/pi";
 
-const TutorCard = () => {
+const TutorCard = ({user}) => {
     // const { authorName, authorImage, bio } = author || {};
 
 
     return (
       <div className="flex flex-col border-2 w-full justify-center mx-auto p-6 shadow-md rounded-xl sm:px-12">
         <img
-          src="https://staticimagescdn.cambly.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FmichelleBurns.ed3cc17b.webp&w=96&q=75"
+          src={user?.imageURL}
           alt=""
           className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square"
         />
         <div className="space-y-4 text-center divide-y dark:divide-gray-300">
           <div className="my-2 space-y-1">
-            <h2 className="text-xl font-semibold sm:text-2xl">Alex</h2>
+            <h2 className="text-xl font-semibold sm:text-2xl">{user?.name}</h2>
             <div className="flex items-center justify-center gap-6">
               {/* kkkkkkkk */}
               <div className="flex items-center gap-2">
@@ -28,7 +28,6 @@ const TutorCard = () => {
               </div>
               {/* kkkkkkkk */}
               <div className="flex items-center gap-2">
-
                 <span>
                   <MdRateReview />
                 </span>
@@ -110,6 +109,8 @@ const TutorCard = () => {
     );
 }
 
-TutorCard.propTypes = {}
+TutorCard.propTypes = {
+  user:PropTypes.object
+}
 
 export default TutorCard

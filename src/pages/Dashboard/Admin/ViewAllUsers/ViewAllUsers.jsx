@@ -4,9 +4,9 @@ import UserDataRow from "./UserDataRow";
 
 
 const ViewAllUsers = () => {
-  const {users,isLoading,refetch} = useUsers();
+  const { users, userLoading, refetch } = useUsers();
 
-  if (isLoading) return <LoadingSpinner/>
+  if (userLoading) return <LoadingSpinner />;
   return (
     <>
       <section className="container px-4 mx-auto pt-12">
