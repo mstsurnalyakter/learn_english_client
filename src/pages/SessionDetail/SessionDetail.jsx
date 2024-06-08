@@ -10,22 +10,25 @@ import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinne
 import BookingModal from "./BookingModal";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import useReviews from "../../hooks/useReviews";
 
 const SessionDetail = () => {
   const axiosSecure = useAxiosSecure();
   const { users } = useUsers();
   const { user } = useAuth();
   const { id } = useParams();
-
-// llllllllllllllllllllllllllllll
-
+  const { reviews} = useReviews(id);
 const [isOpen, setIsOpen] = useState(false);
+
+const sum = reviews.reduce((sum,review)=> sum + review?.rating,0)
+const averageRating = sum / (reviews?.length);
+
+
 
  const closeModal = () => {
     setIsOpen(false);
  };
 
-// llllllllllllllllllllllllllllll
 
   const findUser = users?.find(
     (singleUser) => singleUser.email === user?.email
@@ -128,7 +131,7 @@ const [isOpen, setIsOpen] = useState(false);
           <span className="text-orange-800">
             <FaStar />
           </span>
-          dynamic data added
+          {averageRating || 0}
         </p>
         <p>
           <b>Status:</b> {status}

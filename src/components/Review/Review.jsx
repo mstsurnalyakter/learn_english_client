@@ -3,29 +3,19 @@ import { useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
-import { useQuery } from "@tanstack/react-query";
 import ReviewSection from "./ReviewSection";
 import LoadingSpinner from "../Shared/LoadingSpinner/LoadingSpinner";
+import useReviews from "../../hooks/useReviews";
 
 const Review = ({ id, user, tutorInfo }) => {
   const axiosCommon = useAxiosCommon();
+  const {reviews,reviewLoading,reviewRefetch} = useReviews(id);
 
   const [data, setData] = useState({
     review: "",
     rating: 0,
   });
 
-  const {
-    data: reviews = [],
-    isLoading:reviewLoading,
-    refetch:reviewRefetch,
-  } = useQuery({
-    queryKey: ["reviews"],
-    queryFn: async () => {
-      const { data } = await axiosCommon(`/reviews/${id}`);
-      return data;
-    },
-  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
