@@ -32,7 +32,7 @@ const ViewAllStudySessions = () => {
           <h2 className="text-lg font-medium text-gray-800 ">Study Session</h2>
 
           <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full ">
-            {studySession?.length > 0 && studySession?.length}
+            {studySession?.length > 0 ? studySession?.length : 0}
           </span>
         </div>
 
