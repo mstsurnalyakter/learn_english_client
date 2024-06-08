@@ -51,7 +51,7 @@ const Review = ({ id, user, tutorInfo }) => {
   if(reviewLoading) return <LoadingSpinner/>
 
   return (
-    <div className="space-y-7">
+    <div className="space-y-10">
       <div>
         <h2 className="text-3xl font-semibold text-center mt-10 space-y-6">
           Your opinion matters!
