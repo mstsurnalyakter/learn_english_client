@@ -16,8 +16,9 @@ const CreateNote = () => {
     e.preventDefault();
     const noteInfo = {
       ...data,
-      email:user?.email
-    }
+      email: user?.email,
+      date: new Date(),
+    };
 
        try {
       const {data} = await axiosSecure.post("/note",noteInfo );
