@@ -22,7 +22,7 @@ const Review = ({ id, user, tutorInfo }) => {
   } = useQuery({
     queryKey: ["reviews"],
     queryFn: async () => {
-      const { data } = await axiosCommon(`/reviews`);
+      const { data } = await axiosCommon(`/reviews/${id}`);
       return data;
     },
   });
