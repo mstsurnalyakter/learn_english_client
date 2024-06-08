@@ -7,12 +7,24 @@ import Review from "../../components/Review/Review";
 import useUsers from "../../hooks/useUsers";
 import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
+import BookingModal from "./BookingModal";
+import { useState } from "react";
 
 const SessionDetail = () => {
   const axiosSecure = useAxiosSecure();
   const { users } = useUsers();
   const { user } = useAuth();
   const { id } = useParams();
+
+// llllllllllllllllllllllllllllll
+
+const [isOpen, setIsOpen] = useState(false);
+
+ const closeModal = () => {
+    setIsOpen(false);
+ };
+
+// llllllllllllllllllllllllllllll
 
   const findUser = users?.find(
     (singleUser) => singleUser.email === user?.email
@@ -101,11 +113,27 @@ const SessionDetail = () => {
           <b>Description:</b> {sessionDescription}
         </p>
         <button
+          onClick={() => setIsOpen(true)}
           disabled={findUser?.role === "admin" || findUser?.role === "tutor"}
           className="px-4 w-full py-2 mt-4 disabled:cursor-not-allowed rounded  bg-[#4D95EA] text-white font-semibold"
         >
           Book Now
         </button>
+        {/* modal */}
+        <BookingModal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          refetch={refetch}
+          bookingInfo={{
+            ...session,
+            sessionID:session?._id,
+            student: {
+              name: user?.displayName,
+              email: user?.email,
+              image: user?.photoURL,
+            },
+          }}
+        />
       </div>
       {/* lllllllllllllllll */}
       <Review id={_id} user={user} tutorInfo={tutorInfo} />
