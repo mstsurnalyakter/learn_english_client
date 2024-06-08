@@ -109,7 +109,7 @@ const CheckoutForm = ({ closeModal, bookingInfo, refetch }) => {
       try {
         //2. save payment info in booking collection db
         const { data } = await axiosSecure.post("/booking", paymentInfo);
-        
+
         if (data.insertedId) {
           refetch();
           closeModal();

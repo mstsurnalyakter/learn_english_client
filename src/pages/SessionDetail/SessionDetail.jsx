@@ -9,6 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
 import BookingModal from "./BookingModal";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const SessionDetail = () => {
   const axiosSecure = useAxiosSecure();
@@ -58,6 +59,45 @@ const [isOpen, setIsOpen] = useState(false);
     _id,
     user: tutorInfo,
   } = session || {};
+
+  const student = {
+    name: user?.displayName,
+    email: user?.email,
+    image: user?.photoURL,
+    }
+
+
+   const checkStartDate =
+     new Date(session?.registrationStartDate) <= new Date();
+   const checkEndDate = new Date(session?.registrationEndDate) >= new Date();
+
+   const handleBook = async () =>{
+    const bookingInfo = {
+      sessionID: _id,
+      student,
+      sessionTitle,
+      user: tutorInfo,
+      registrationFee,
+      date: new Date(),
+    };
+    console.log(bookingInfo);
+
+    try {
+       const { data } = await axiosSecure.post("/booking", bookingInfo);
+
+        if (data.insertedId) {
+          refetch();
+          toast.success("Session Booked successfully.");
+        }
+
+    } catch (error) {
+      if (error.response.data) return toast.error(error.response.data);
+      toast.error(error.message);
+    }
+
+
+   }
+
 
   if (isLoading) return <LoadingSpinner/>
 
@@ -113,8 +153,12 @@ const [isOpen, setIsOpen] = useState(false);
           <b>Description:</b> {sessionDescription}
         </p>
         <button
-          onClick={() => setIsOpen(true)}
-          disabled={findUser?.role === "admin" || findUser?.role === "tutor"}
+          onClick={() => (registrationFee > 0 ? setIsOpen(true) : handleBook() )}
+          disabled={
+            findUser?.role === "admin" ||
+            findUser?.role === "tutor" ||
+            (!checkStartDate && !checkEndDate)
+          }
           className="px-4 w-full py-2 mt-4 disabled:cursor-not-allowed rounded  bg-[#4D95EA] text-white font-semibold"
         >
           Book Now
@@ -126,12 +170,8 @@ const [isOpen, setIsOpen] = useState(false);
           refetch={refetch}
           bookingInfo={{
             ...session,
-            sessionID:session?._id,
-            student: {
-              name: user?.displayName,
-              email: user?.email,
-              image: user?.photoURL,
-            },
+            sessionID: session?._id,
+            student,
           }}
         />
       </div>
