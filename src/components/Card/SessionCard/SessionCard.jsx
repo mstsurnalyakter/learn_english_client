@@ -18,8 +18,11 @@ const SessionCard = ({session}) => {
         <div className="flex flex-col justify-between p-6 space-y-8">
           <div className="space-y-2 flex-grow">
             <h2 className="text-lg font-medium">{session?.sessionTitle}</h2>
-            <p className="dark:text-gray-800 text-sm">
-              {session?.sessionDescription.slice(0, 150)}
+            <p
+              title={session?.sessionDescription}
+              className="dark:text-gray-800 text-sm"
+            >
+              {session?.sessionDescription.slice(0, 150)}....
             </p>
           </div>
           <div>
