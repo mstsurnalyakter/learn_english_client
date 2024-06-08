@@ -4,17 +4,17 @@ import { useParams } from "react-router";
 import DynamicTitle from "../../components/Shared/DynamicTitle/DynamicTitle";
 import { FaStar } from "react-icons/fa";
 import Review from "../../components/Review/Review";
-import useUsers from "../../hooks/useUsers";
 import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
 import BookingModal from "./BookingModal";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useReviews from "../../hooks/useReviews";
+import useRole from "../../hooks/useRole";
 
 const SessionDetail = () => {
   const axiosSecure = useAxiosSecure();
-  const { users } = useUsers();
+const {role} = useRole();
   const { user } = useAuth();
   const { id } = useParams();
   const { reviews} = useReviews(id);
@@ -30,9 +30,6 @@ const averageRating = sum / (reviews?.length);
  };
 
 
-  const findUser = users?.find(
-    (singleUser) => singleUser.email === user?.email
-  );
 
   const {
     data: session = {},
@@ -158,9 +155,9 @@ const averageRating = sum / (reviews?.length);
         <button
           onClick={() => (registrationFee > 0 ? setIsOpen(true) : handleBook() )}
           disabled={
-            findUser?.role === "admin" ||
-            findUser?.role === "tutor" ||
-            (!checkStartDate && !checkEndDate)
+             role === "admin" ||
+             role === "tutor" ||
+            (!checkStartDate || !checkEndDate)
           }
           className="px-4 w-full py-2 mt-4 disabled:cursor-not-allowed rounded  bg-[#4D95EA] text-white font-semibold"
         >
