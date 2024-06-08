@@ -9,12 +9,14 @@ import { useEffect, useState } from "react";
 import { Collapse, IconButton } from "@material-tailwind/react";
 import TutorNavLinks from "../Tutor/NavLinks/NavLinks";
 import AdminNavLinks from "../Admin/NavLinks/NavLinks";
+import useRole from "../../../hooks/useRole";
+import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 
 export const SideBarItem = () => {
 
-  const isStudent = false;
-  const isTutor = true;
-  const isAdmin = false;
+  const {role, isLoading} = useRole();
+
+  if (isLoading) return <LoadingSpinner/>
 
   return (
     <div className="flex flex-col justify-between   p-3  lg:min-h-screen bg-[#4D95EA] items-center">
@@ -35,9 +37,9 @@ export const SideBarItem = () => {
               icon={FaBookOpen}
             />
 
-            {isStudent && <NavLinks />}
-            {isTutor && <TutorNavLinks />}
-            {isAdmin && <AdminNavLinks />}
+            {role === "student" && <NavLinks />}
+            {role === 'tutor' && <TutorNavLinks />}
+            {role === 'admin' && <AdminNavLinks />}
           </ul>
         </div>
       </div>
@@ -88,8 +90,7 @@ export const SideBarItem = () => {
 };
 
 const Sidebar = () => {
-  //TODO: get isAdmin value from the database
-  //   const isStudent = true;
+
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {

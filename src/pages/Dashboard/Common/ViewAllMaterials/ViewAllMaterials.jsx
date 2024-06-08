@@ -1,19 +1,20 @@
+import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import useRole from "../../../../hooks/useRole";
 import AdminViewAllMaterials from "../../Admin/AdminViewAllMaterials/AdminViewAllMaterials";
 import StudentViewAllMaterials from "../../Student/StudentViewAllMaterials/StudentViewAllMaterials";
 import TutorViewAllMaterials from "../../Tutor/TutorViewAllMaterials/TutorViewAllMaterials";
 
 
 const ViewAllMaterials = () => {
-      const isStudent = false;
-      const isTutor = true;
-      const isAdmin = false;
+      const {role, isLoading} = useRole();
+      if (isLoading) return <LoadingSpinner/>
   return (
     <>
-    {isStudent && <StudentViewAllMaterials/>}
-    {isTutor && <TutorViewAllMaterials/>}
-    {isAdmin && <AdminViewAllMaterials/>}
+      {role === "student" && <StudentViewAllMaterials />}
+      {role === "tutor" && <TutorViewAllMaterials />}
+      {role === "admin" && <AdminViewAllMaterials />}
     </>
-  )
+  );
 }
 
 export default ViewAllMaterials
