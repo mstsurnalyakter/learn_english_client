@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 
 const BookedSession = () => {
@@ -17,10 +19,8 @@ const { data: bookingSessions = [], bookingsSessionLoading } = useQuery({
   },
 });
 
-console.log(bookingSessions);
 
-
-
+if (bookingsSessionLoading) return <LoadingSpinner/>
 
   return (
     <div>
@@ -48,6 +48,7 @@ console.log(bookingSessions);
                       >
                         #
                       </th>
+
                       <th
                         scope="col"
                         className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-[#4D95EA]"
@@ -77,12 +78,16 @@ console.log(bookingSessions);
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-[#4D95EA]"
                       >
-                        Status
+                        Session Id
                       </th>
 
-                      <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-[#4D95EA]">
-                        Actions
+                      <th
+                        scope="col"
+                        className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-[#4D95EA]"
+                      >
+                        Booking Date
                       </th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
@@ -92,6 +97,7 @@ console.log(bookingSessions);
                           <th className="px-4 py-4 font-medium text-sm text-gray-700 ">
                             {index + 1}
                           </th>
+
                           <td className="px-4 py-4 font-medium text-sm text-gray-700 ">
                             {session?.sessionTitle}
                           </td>
@@ -106,54 +112,21 @@ console.log(bookingSessions);
                           </td>
 
                           <td className="px-4 py-4 text-sm text-gray-500 ">
-                            {new Date(
-                              session?.registrationStartDate
-                            ).toLocaleDateString()}{" "}
-                            to{" "}
-                            {new Date(
-                              session?.registrationEndDate
-                            ).toLocaleDateString()}
+                            {session?.sessionID}
                           </td>
 
-                          <td className="px-4 py-4 text-sm font-medium text-gray-700">
-                            <div
-                              className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
-                                session?.status === "pending" &&
-                                "bg-yellow-100 text-yellow-900"
-                              } ${
-                                session?.status === "approved" &&
-                                "bg-green-100 text-green-900"
-                              }${
-                                session?.status === "rejected" &&
-                                "bg-red-100 text-red-900"
-                              }`}
-                            >
-                              <span
-                                className={`h-1.5 w-1.5 rounded-full ${
-                                  session?.status === "pending" &&
-                                  "bg-yellow-900"
-                                }${
-                                  session?.status === "approved" &&
-                                  "bg-green-900"
-                                } ${
-                                  session?.status === "rejected" && "bg-red-900"
-                                } `}
-                              ></span>
-                              <h2 className="text-sm font-normal ">
-                                {session?.status}
-                              </h2>
-                            </div>
+                          <td className="px-4 py-4 text-sm text-gray-500 ">
+                            {new Date(session?.date).toLocaleDateString()}
                           </td>
-
-                          <td className="px-4 py-4 text-sm">
-                            <button
-                              disabled={session?.status !== "rejected"}
-                              onClick={() => handleStatus(session?._id)}
-                              title="New Approval Request"
-                              className="text-gray-800 transition-colors duration-200  hover:text-red-800 focus:outline-none disabled:cursor-not-allowed"
-                            >
-                              <IoIosGitPullRequest />
-                            </button>
+                          <td className="px-4 py-4 text-sm text-gray-500 ">
+                            <Link to={`/sessionDetail/${session?.sessionID}`}>
+                              <button
+                                type="button"
+                                className="flex items-center bg-[#4D95EA] text-white hover:bg-[#358ef4]  justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
+                              >
+                                View Detail
+                              </button>
+                            </Link>
                           </td>
                         </tr>
                       ))}
