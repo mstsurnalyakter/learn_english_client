@@ -14,6 +14,7 @@ import ViewAllStudySession from "../pages/Dashboard/Admin/ViewAllStudySession/Vi
 import ViewAllMaterials from "../pages/Dashboard/Common/ViewAllMaterials/ViewAllMaterials";
 import ViewAllStudySessions from "../pages/Dashboard/Tutor/ViewAllStudySessions/ViewAllStudySessions";
 import SessionDetail from "../pages/SessionDetail/SessionDetail";
+import PrivateRoute from "./PrivateRoute";
 
 
 
@@ -36,53 +37,97 @@ const router = createBrowserRouter([
       },
       {
         path: "/sessionDetail/:id",
-        element: <SessionDetail />,
+        element: (
+          <PrivateRoute>
+            <SessionDetail />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       // common route
       {
         index: true,
-        element: <ViewAllMaterials />,
+        element: (
+          <PrivateRoute>
+            <ViewAllMaterials />
+          </PrivateRoute>
+        ),
       },
       // student routes
       {
         path: "booked-session",
-        element: <BookedSession />,
+        element: (
+          <PrivateRoute>
+            <BookedSession />
+          </PrivateRoute>
+        ),
       },
       {
         path: "create-note",
-        element: <CreateNote />,
+        element: (
+          <PrivateRoute>
+            <CreateNote />
+          </PrivateRoute>
+        ),
       },
       {
         path: "manage-notes",
-        element: <ManageNotes />,
+        element: (
+          <PrivateRoute>
+            <ManageNotes />
+          </PrivateRoute>
+        ),
       },
       // tutor routes
       {
         path: "create-study-session",
-        element: <CreateStudySession />,
+        element: (
+          <PrivateRoute>
+            <CreateStudySession />
+          </PrivateRoute>
+        ),
       },
       {
         path: "upload-materials",
-        element: <UploadMaterials />,
+        element: (
+          <PrivateRoute>
+            <UploadMaterials />
+          </PrivateRoute>
+        ),
       },
       {
         path: "view-all-study-sessions",
-        element: <ViewAllStudySessions />,
+        element: (
+          <PrivateRoute>
+            <ViewAllStudySessions />
+          </PrivateRoute>
+        ),
       },
       // admin routes
       {
         path: "view-all-users",
-        element: <ViewAllUsers />,
+        element: (
+          <PrivateRoute>
+            <ViewAllUsers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "view-all-study-session",
-        element: <ViewAllStudySession />,
+        element: (
+          <PrivateRoute>
+            <ViewAllStudySession />
+          </PrivateRoute>
+        ),
       },
     ],
   },
