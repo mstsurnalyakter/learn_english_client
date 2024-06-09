@@ -4,24 +4,56 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
 
 
 const AdminViewAllMaterials = () => {
 
   const axiosSecure = useAxiosSecure();
+     const [currentPage, setCurrentPage] = useState(1);
+     const [itemPerPage, setItemPerPage] = useState(5);
+     const [count, setCount] = useState(0);
+     const numberOfPages = Math.ceil(count / itemPerPage);
+     const pages = [...Array(numberOfPages).keys()].map(
+       (element) => element + 1
+     );
+
 
   const {
     data: materials = [],
     isLoading: materialsLoading,
     refetch: materialsRefetch,
+    isError,
+    error,
   } = useQuery({
-    queryKey: ["materials"],
+    queryKey: ["materials", currentPage, itemPerPage],
     enabled: !!localStorage.getItem("access-token"),
     queryFn: async () => {
-      const { data } = await axiosSecure(`/allMaterials`);
+      const { data } = await axiosSecure(
+        `/allMaterials?page=${currentPage}&size=${itemPerPage}`
+      );
       return data;
     },
   });
+
+
+     const {
+       data: countData = [],
+       isLoading: countIsLoading,
+       refetch: countRefetch,
+       isError: countIsError,
+       error: countError,
+     } = useQuery({
+       queryKey: ["users-count"],
+       enabled: !!localStorage.getItem("access-token"),
+       queryFn: async () => {
+         const { data } = await axiosSecure(`/materials-count`);
+         setCount(data.count);
+         return data;
+       },
+     });
+
 
 
     const handleDelete = async (id) => {
@@ -52,6 +84,19 @@ const AdminViewAllMaterials = () => {
         toast.error(error.message);
       }
     };
+
+
+
+  if (materialsLoading || countIsLoading) return <LoadingSpinner />;
+
+  if (isError || countIsError) {
+    toast.error(error.message);
+  }
+
+  const handlePaginationButton = (value) => {
+    console.log(value);
+    setCurrentPage(value);
+  };
 
   return (
     <div>
@@ -168,7 +213,6 @@ const AdminViewAllMaterials = () => {
                             >
                               <MdDelete />
                             </button>
-
                           </td>
                         </tr>
                       ))}
@@ -179,6 +223,75 @@ const AdminViewAllMaterials = () => {
           </div>
         </div>
       </section>
+
+      {/* pagination section */}
+
+      <div className="flex justify-center mt-16">
+        {/* previous button */}
+        <button
+          onClick={() => handlePaginationButton(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-4 py-2 mx-1 text-gray-700 dark:text-gray-900 disabled:text-gray-500 capitalize bg-gray-200 rounded-md disabled:cursor-not-allowed disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:bg-[#4D95EA]  hover:text-white"
+        >
+          <div className="flex items-center -mx-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 mx-1 rtl:-scale-x-100"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M7 16l-4-4m0 0l4-4m-4 4h18"
+              />
+            </svg>
+
+            <span className="mx-1">previous</span>
+          </div>
+        </button>
+
+        {/* numbers */}
+        {pages?.map((btnNum) => (
+          <button
+            key={btnNum}
+            onClick={() => handlePaginationButton(btnNum)}
+            className={`hidden ${
+              currentPage === btnNum ? "bg-[#2686f5] text-white " : ""
+            } px-4 py-2 mx-1 transition-colors duration-300 dark:text-gray-100  transform  rounded-md sm:inline bg-[#94c0f2]  text-white`}
+          >
+            {btnNum}
+          </button>
+        ))}
+
+        {/* next button */}
+        <button
+          onClick={() => handlePaginationButton(currentPage + 1)}
+          disabled={currentPage === numberOfPages}
+          className="px-4 py-2 mx-1 text-gray-700 dark:text-gray-900 transition-colors duration-300 transform bg-gray-200 rounded-md hover:bg-[#4D95EA] disabled:hover:bg-gray-200 disabled:hover:text-gray-500 hover:text-white disabled:cursor-not-allowed disabled:text-gray-500"
+        >
+          <div className="flex items-center -mx-1">
+            <span className="mx-1">Next</span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 mx-1 rtl:-scale-x-100"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
     </div>
   );
 }
