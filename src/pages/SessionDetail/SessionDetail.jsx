@@ -14,22 +14,22 @@ import useRole from "../../hooks/useRole";
 
 const SessionDetail = () => {
   const axiosSecure = useAxiosSecure();
-const {role} = useRole();
+  const { role } = useRole();
   const { user } = useAuth();
   const { id } = useParams();
-  const { reviews} = useReviews(id);
-const [isOpen, setIsOpen] = useState(false);
+  const { reviews } = useReviews(id);
+  const [isOpen, setIsOpen] = useState(false);
 
-const sum = reviews.reduce((sum,review)=> sum + review?.rating,0)
-const averageRating = sum / (reviews?.length);
+  
 
+  // averageRating
 
+  const sum = reviews.reduce((sum, review) => sum + review?.rating, 0);
+  const averageRating = sum / reviews?.length;
 
- const closeModal = () => {
+  const closeModal = () => {
     setIsOpen(false);
- };
-
-
+  };
 
   const {
     data: session = {},
@@ -64,14 +64,12 @@ const averageRating = sum / (reviews?.length);
     name: user?.displayName,
     email: user?.email,
     image: user?.photoURL,
-    }
+  };
 
+  const checkStartDate = new Date(session?.registrationStartDate) <= new Date();
+  const checkEndDate = new Date(session?.registrationEndDate) >= new Date();
 
-   const checkStartDate =
-     new Date(session?.registrationStartDate) <= new Date();
-   const checkEndDate = new Date(session?.registrationEndDate) >= new Date();
-
-   const handleBook = async () =>{
+  const handleBook = async () => {
     const bookingInfo = {
       sessionID: _id,
       student,
@@ -83,23 +81,19 @@ const averageRating = sum / (reviews?.length);
     console.log(bookingInfo);
 
     try {
-       const { data } = await axiosSecure.post("/booking", bookingInfo);
+      const { data } = await axiosSecure.post("/booking", bookingInfo);
 
-        if (data.insertedId) {
-          refetch();
-          toast.success("Session Booked successfully.");
-        }
-
+      if (data.insertedId) {
+        refetch();
+        toast.success("Session Booked successfully.");
+      }
     } catch (error) {
       if (error.response.data) return toast.error(error.response.data);
       toast.error(error.message);
     }
+  };
 
-
-   }
-
-
-  if (isLoading) return <LoadingSpinner/>
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className="space-y-10">
@@ -153,11 +147,12 @@ const averageRating = sum / (reviews?.length);
           <b>Description:</b> {sessionDescription}
         </p>
         <button
-          onClick={() => (registrationFee > 0 ? setIsOpen(true) : handleBook() )}
+          onClick={() => (registrationFee > 0 ? setIsOpen(true) : handleBook())}
           disabled={
-             role === "admin" ||
-             role === "tutor" ||
-            (!checkStartDate || !checkEndDate)
+            role === "admin" ||
+            role === "tutor" ||
+            !checkStartDate ||
+            !checkEndDate
           }
           className="px-4 w-full py-2 mt-4 disabled:cursor-not-allowed rounded  bg-[#4D95EA] text-white font-semibold"
         >

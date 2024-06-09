@@ -1,63 +1,73 @@
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useState } from "react";
-import { imageUpload } from "../../../../api/utils";
+// import { imageUpload } from "../../../../api/utils";
 import useAuth from "../../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import DynamicTitle from "../../../../components/Shared/DynamicTitle/DynamicTitle";
 import { FaUpload } from "react-icons/fa";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { useQuery } from "@tanstack/react-query";
+import { imageUpload } from "../../../../api/utils";
 
 const UploadMaterials = () => {
     const axiosSecure = useAxiosSecure();
     const [loading, setLoading] = useState(false);
-    const { user } = useAuth();
+    const { user, loading:userLoading } = useAuth();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+      const {
+        register,
+        handleSubmit,
+         reset,
+        formState: { errors },
+      } = useForm();
+
+    const {
+      data: approvedSessions = [],
+      approvedSessionsLoading,
+      approvedSessionsRefetch,
+    } = useQuery({
+      queryKey: ["approvedSessions", user?.email],
+      enabled:
+        (!userLoading && !!user?.email) ||
+        !!localStorage.getItem("access-token"),
+      queryFn: async () => {
+        const { data } = await axiosSecure(`/sessions/approved/${user?.email}`);
+        return data;
+      },
+    });
+
+
+    const sessionIDArr = approvedSessions?.map(
+      (session) => session?._id
+    );
 
 
    const onSubmit = async (data) => {
-     const { bannerImage, sessionTitle, sessionDuration, sessionDescription } =
-       data;
-    //  const registrationStartDate = startDate1;
-    //  const registrationEndDate = startDate2;
-    //  const classStartDate = startDate3;
-    //  const classEndDate = startDate4;
+    const { title, image, link, sessionID } = data || {};
+
 
      setLoading(true);
-     const imageURL = await imageUpload(bannerImage[0]);
-     console.log(imageURL);
+     const imageURL = await imageUpload(image[0]);
 
-     const sessionInfo = {
-       imageURL,
-       sessionTitle,
-       registrationFee: 0,
-       registrationStartDate,
-       registrationEndDate,
-       classStartDate,
-       classEndDate,
-       sessionDescription,
-       sessionDuration,
-       status: "pending",
-       students: 0,
-       user: {
-         email: user?.email,
-         name: user?.displayName,
-       },
-     };
+      const materialInfo = {
+        title,
+        imageURL,
+        link,
+        sessionID,
+        email: user?.email,
+      };
 
      try {
        const { data } = await axiosSecure.post(
-         "/create-study-session",
-         sessionInfo
+         "/upload-material",
+         materialInfo
        );
+       console.log(data);
        if (data?.insertedId) {
          setLoading(false);
-         toast.success("Study Session created Successfully.");
+         toast.success("Upload Materials Successfully.");
+          reset();
        }
      } catch (error) {
        toast.error(error.message);
@@ -65,11 +75,10 @@ const UploadMaterials = () => {
      }
    };
 
-
   return (
-    <div className=" border border-[#4D95EA]">
+    <>
       <DynamicTitle pageTitle="Upload Materials" />
-      <div className="shadow-lg  p-5  bg-[#4D95EA] text-gray-800 font-medium">
+      <div className="shadow-lg border-2 p-5  text-gray-800 font-medium">
         {/* Heading */}
         <div className="mt-5 mb-8">
           <p className="flex items-center justify-center text-3xl font-bold ">
@@ -84,96 +93,19 @@ const UploadMaterials = () => {
           <div className="flex gap-8 ">
             <div className="flex-1 space-y-3">
               <div>
-                <label className="block mb-2 " htmlFor="bannerImage">
-                  Banner Image
-                </label>
-                <input
-                  className="w-full p-2 border-2 rounded-md focus:outline-[#4D95EA]"
-                  type="file"
-                  name="bannerImage"
-                  id="bannerImage"
-                  placeholder="Banner Image"
-                  {...register("bannerImage", { required: true })}
-                />
-              </div>
-
-              <div>
-                <label className="block mb-2 " htmlFor="sessionTitle">
-                  Session Title
+                <label className="block mb-2 " htmlFor="title">
+                  Title
                 </label>
                 <input
                   className="w-full p-2 border-2 rounded-md focus:outline-[#4D95EA]"
                   type="text"
-                  placeholder="Session Title"
-                  id="sessionTitle"
-                  name="sessionTitle"
-                  {...register("sessionTitle", { required: true })}
+                  placeholder="Title"
+                  id="title"
+                  name="title"
+                  {...register("title", { required: true })}
                 />
               </div>
 
-              {/* <div className="flex flex-col">
-                <label className="mb-2">Registration Start Date</label>
-                <DatePicker
-                  required
-                  selected={startDate1}
-                  onChange={(date) => setStartDate1(date)}
-                  className="p-2 border-2 rounded-md focus:outline-[#4D95EA]  w-full"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="mb-2">Class Start date</label>
-                <DatePicker
-                  required
-                  selected={startDate3}
-                  onChange={(date) => setStartDate3(date)}
-                  className="p-2 border-2 rounded-md focus:outline-[#4D95EA]  w-full"
-                />
-              </div> */}
-
-              <div>
-                <label className="block mb-2 " htmlFor="registrationFee">
-                  Registration Fee
-                </label>
-                <input
-                  className="w-full p-2 placeholder:text-gray-800  border-2 rounded-md focus:outline-[#4D95EA]"
-                  disabled
-                  type="number"
-                  placeholder="0"
-                  id="registrationFee"
-                  name="registrationFee"
-                />
-              </div>
-
-              <div>
-                <label className="block mb-2 " htmlFor="status">
-                  Status
-                </label>
-                <input
-                  className="w-full p-2 border-2 placeholder:text-gray-800 rounded-md focus:outline-[#4D95EA]"
-                  type="text"
-                  placeholder="Pending"
-                  id="status"
-                  name="status"
-                  disabled
-                />
-              </div>
-            </div>
-            {/* Right side */}
-            <div className="flex-1 space-y-4 mb-4">
-              <div>
-                <label className="block mb-2 " htmlFor="name">
-                  Tutor Name
-                </label>
-                <input
-                  className="w-full p-2 border-2 rounded-md focus:outline-[#4D95EA]"
-                  type="text"
-                  name="name"
-                  defaultValue={user?.displayName}
-                  id="name"
-                  disabled
-                  placeholder="Name"
-                />
-              </div>
               <div>
                 <label className="block mb-2 " htmlFor="name">
                   Tutor Email
@@ -189,89 +121,76 @@ const UploadMaterials = () => {
                 />
               </div>
 
-              {/* <div className="flex flex-col">
-                <label className="mb-2">Registration End Date</label>
-                <DatePicker
-                  required
-                  selected={startDate2}
-                  onChange={(date) => setStartDate2(date)}
-                  className="p-2 border-2 rounded-md focus:outline-[#4D95EA]  w-full"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="mb-2">Class End Date</label>
-                <DatePicker
-                  required
-                  selected={startDate4}
-                  onChange={(date) => setStartDate4(date)}
-                  className="p-2 border-2 rounded-md focus:outline-[#4D95EA]  w-full"
-                />
-              </div> */}
-              <div>
-                <label className="block mb-2 " htmlFor="sessionDuration">
-                  Session Duration (hours {`<`} 2)
+              <div className="mt-4">
+                <label
+                  className="block mb-2 text-sm font-medium text-gray-600 "
+                  htmlFor="image"
+                >
+                  Image Upload
                 </label>
                 <input
-                  className="w-full p-2 border-2 rounded-md focus:outline-[#4D95EA]"
-                  type="number"
-                  min={3}
-                  placeholder="Session Duration (hours < 2)"
-                  id="sessionDuration"
-                  name="sessionDuration"
-                  {...register("sessionDuration", { required: true })}
+                  id="image"
+                  autoComplete="image"
+                  name="image"
+                  className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-700 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-700"
+                  type="file"
+                  placeholder="Image Upload"
+                  {...register("image", { required: true })}
                 />
               </div>
 
+              <div className="mt-4">
+                <select
+                  name="sessionID"
+                  id="sessionID"
+                  className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg    focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
+                  type="text"
+                  placeholder="Select Study session ID "
+                  {...register("sessionID", { required: true })}
+                >
+                  <option value="">Select Study session ID</option>
+                  {sessionIDArr?.length > 0 &&
+                    sessionIDArr?.map((id) => (
+                      <option key={id} value={id}>{id}</option>
+                    ))}
+                </select>
+              </div>
+
               <div>
-                <label className="block mb-2 " htmlFor="students">
-                  Students
+                <label className="block mb-2 " htmlFor="link">
+                  Google Drive Link
                 </label>
                 <input
-                  className="w-full p-2 placeholder:text-gray-800  border-2 rounded-md focus:outline-[#4D95EA]"
-                  disabled
-                  type="number"
-                  placeholder="0"
-                  id="students"
-                  name="students"
+                  className="w-full p-2 border-2 rounded-md focus:outline-[#4D95EA]"
+                  type="url"
+                  placeholder="link"
+                  id="link"
+                  name="link"
+                  {...register("link", { required: true })}
                 />
               </div>
             </div>
           </div>
 
-          <div className="mt-4">
-            <label className="block mb-2 " htmlFor="sessionDescription">
-              Session Description
-            </label>
-
-            <textarea
-              {...register("sessionDescription", { required: true })}
-              id="sessionDescription"
-              name="sessionDescription"
-              placeholder="Enter Session Description"
-              className="textarea textarea-bordered border-2 p-2 rounded-md w-full focus:outline-[#4D95EA]"
-            ></textarea>
-          </div>
-
-          {/* <input
-             className="px-4 w-full py-2 mt-4 cursor-pointer rounded  bg-[#E3B342]"
-             type="submit"
-             value="Create Study Session"
-           /> */}
           <button
             disabled={loading}
             type="submit"
-            className="px-4 w-full py-2 mt-4 cursor-pointer rounded  bg-[#E3B342]"
+            className="px-4 w-full py-2 mt-4 cursor-pointer rounded  bg-[#4D95EA] text-white"
           >
             {loading ? (
               <TbFidgetSpinner className="animate-spin m-auto" />
             ) : (
-              "Save & Continue"
+              " Upload Material"
             )}
           </button>
         </form>
       </div>
-    </div>
+    </>
   );
+
+
+
+
 };
 
 export default UploadMaterials;
