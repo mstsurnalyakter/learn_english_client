@@ -17,6 +17,7 @@ import SessionDetail from "../pages/SessionDetail/SessionDetail";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import TutorRoute from "./TutorRoute";
+import BookedSessionDetail from "../pages/Dashboard/Student/BookedSession/BookedSessionDetail";
 
 
 
@@ -74,6 +75,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "bookedSessionDetail/:id",
+        element: (
+          <PrivateRoute>
+            <BookedSessionDetail />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "create-note",
         element: (
           <PrivateRoute>
@@ -115,7 +124,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <TutorRoute>
-            <ViewAllStudySessions />
+              <ViewAllStudySessions />
             </TutorRoute>
           </PrivateRoute>
         ),

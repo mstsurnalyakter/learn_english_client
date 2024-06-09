@@ -1,36 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useParams } from "react-router";
-import DynamicTitle from "../../components/Shared/DynamicTitle/DynamicTitle";
 import { FaStar } from "react-icons/fa";
-// import Review from "../../components/Review/Review";
-import useAuth from "../../hooks/useAuth";
-import LoadingSpinner from "../../components/Shared/LoadingSpinner/LoadingSpinner";
-import BookingModal from "./BookingModal";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import useReviews from "../../hooks/useReviews";
-import useRole from "../../hooks/useRole";
-import ReviewSection from "../../components/Review/ReviewSection";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAuth from "../../../../hooks/useAuth";
+import useReviews from "../../../../hooks/useReviews";
+import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import DynamicTitle from "../../../../components/Shared/DynamicTitle/DynamicTitle";
+import Review from "../../../../components/Review/Review";
 
-const SessionDetail = () => {
+
+const BookedSessionDetail = () => {
   const axiosSecure = useAxiosSecure();
-  const { role } = useRole();
   const { user } = useAuth();
   const { id } = useParams();
-  const { reviews, reviewLoading } = useReviews(id);
-  const [isOpen, setIsOpen] = useState(false);
-
-
+  const { reviews } = useReviews(id);
 
   // averageRating
 
   const sum = reviews.reduce((sum, review) => sum + review?.rating, 0);
   const averageRating = sum / reviews?.length;
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+
 
   const {
     data: session = {},
@@ -61,51 +51,19 @@ const SessionDetail = () => {
     user: tutorInfo,
   } = session || {};
 
-  const student = {
-    name: user?.displayName,
-    email: user?.email,
-    image: user?.photoURL,
-  };
 
-  const checkStartDate = new Date(session?.registrationStartDate) <= new Date();
-  const checkEndDate = new Date(session?.registrationEndDate) >= new Date();
-
-  const handleBook = async () => {
-    const bookingInfo = {
-      sessionID: _id,
-      student,
-      sessionTitle,
-      user: tutorInfo,
-      registrationFee,
-      date: new Date(),
-    };
-    console.log(bookingInfo);
-
-    try {
-      const { data } = await axiosSecure.post("/booking", bookingInfo);
-
-      if (data.insertedId) {
-        refetch();
-        toast.success("Session Booked successfully.");
-      }
-    } catch (error) {
-      if (error.response.data) return toast.error(error.response.data);
-      toast.error(error.message);
-    }
-  };
-
-  if (isLoading || reviewLoading) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 mb-10">
       <header className="">
         <DynamicTitle pageTitle="Session Details" />
-        <div className="h-[350px] md:h-[450px]">
+        <div className="h-[350px]">
           <img src={imageURL} alt="" className="w-full h-full" />
         </div>
       </header>
 
-      <div className="shadow-md dark:bg-gray-300 border space-y-5 mx-auto px-8 py-8 lg:py-10 lg:px-10">
+      <div className="shadow-md dark:bg-gray-300 border space-y-3 mx-auto px-8 py-8 lg:py-10 lg:px-10">
         <h2 className="text-4xl font-medium">{sessionTitle}</h2>
         <div className="flex gap-3">
           <p>
@@ -145,9 +103,9 @@ const SessionDetail = () => {
         </p>
 
         <p>
-          <b>Description:</b> {sessionDescription}
+          <b>Description:</b> <span className="text-sm">{sessionDescription}</span>
         </p>
-        <button
+        {/* <button
           onClick={() => (registrationFee > 0 ? setIsOpen(true) : handleBook())}
           disabled={
             role === "admin" ||
@@ -158,8 +116,8 @@ const SessionDetail = () => {
           className="px-4 w-full py-2 mt-4 disabled:cursor-not-allowed rounded  bg-[#4D95EA] text-white font-semibold"
         >
           Book Now
-        </button>
-        {/* modal */}
+        </button> */}
+        {/* modal
         <BookingModal
           isOpen={isOpen}
           closeModal={closeModal}
@@ -169,20 +127,53 @@ const SessionDetail = () => {
             sessionID: session?._id,
             student,
           }}
-        />
+        /> */}
       </div>
-      <div>
-        <h3 className="text-center mb-10 font-bold text-2xl mt-16">Student Reviews</h3>
-        <div className="grid grid-cols-1 gap-6">
-          {reviews?.length > 0 &&
-            reviews?.map((review) => (
-              <ReviewSection key={review?._id} review={review} />
-            ))}
-        </div>
-      </div>
-     
+      {/* lllllllllllllllll */}
+      <Review id={_id} user={user} tutorInfo={tutorInfo} />
+      {/* <div>
+        <h2 className="text-3xl font-semibold text-center mt-10 space-y-6">
+          Your opinion matters!
+        </h2>
+        <h5 className="text-center">How was your experience?</h5>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="max-w-48 w-full mx-auto text-center">
+            <div id="rating">Rating</div>
+            <Rating
+              isRequired
+              value={data.rating}
+              visibleLabelId="rating"
+              onChange={(selectedValue) =>
+                setData((prevData) => ({ ...prevData, rating: selectedValue }))
+              }
+            />
+          </div>
+          <div className="flex flex-col w-full">
+            <textarea
+              id="review"
+              required
+              onChange={(event) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  review: event.target.value,
+                }))
+              }
+              rows="3"
+              placeholder="Enter your Review..."
+              className="p-4 rounded-md border-2 dark:text-gray-800 dark:bg-gray-50"
+            ></textarea>
+          </div>
+
+          <div className="flex justify-end">
+            <button className="px-3 py-2 bg-[#4D95EA] text-white" type="submit">
+              Submit review
+            </button>
+          </div>
+        </form>
+      </div> */}
+      {/* lllllllllllllllll */}
     </div>
   );
 };
 
-export default SessionDetail;
+export default BookedSessionDetail;

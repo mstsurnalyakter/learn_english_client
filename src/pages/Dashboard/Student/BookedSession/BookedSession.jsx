@@ -119,7 +119,9 @@ if (bookingsSessionLoading) return <LoadingSpinner/>
                             {new Date(session?.date).toLocaleDateString()}
                           </td>
                           <td className="px-4 py-4 text-sm text-gray-500 ">
-                            <Link to={`/sessionDetail/${session?.sessionID}`}>
+                            <Link
+                              to={`/dashboard/bookedSessionDetail/${session?.sessionID}`}
+                            >
                               <button
                                 type="button"
                                 className="flex items-center bg-[#4D95EA] text-white hover:bg-[#358ef4]  justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"

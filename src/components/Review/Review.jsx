@@ -2,14 +2,14 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import ReviewSection from "./ReviewSection";
-import LoadingSpinner from "../Shared/LoadingSpinner/LoadingSpinner";
-import useReviews from "../../hooks/useReviews";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useReviews from "../../hooks/useReviews";
+import toast from "react-hot-toast";
+
 
 const Review = ({ id, user, tutorInfo }) => {
-  const axiosSecure = useAxiosSecure;
-  const {reviews,reviewLoading,reviewRefetch} = useReviews(id);
+  const axiosSecure = useAxiosSecure();
+  const {reviewRefetch} = useReviews(id);
 
   const [data, setData] = useState({
     review: "",
@@ -32,8 +32,9 @@ const Review = ({ id, user, tutorInfo }) => {
     };
 
     try {
-      const response = await axiosSecure.post("/review", reviewInfo);
-      if (response.data?.insertedId) {
+      const {data} = await axiosSecure.post("/review", reviewInfo);
+      if (data?.insertedId) {
+        toast.success("Review Submit successfully")
         reviewRefetch();
         setData({
           review: "",
@@ -42,13 +43,10 @@ const Review = ({ id, user, tutorInfo }) => {
         event.target.reset();
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
     }
   };
 
-
-
-  if(reviewLoading) return <LoadingSpinner/>
 
   return (
     <div className="space-y-10">
@@ -91,12 +89,6 @@ const Review = ({ id, user, tutorInfo }) => {
             </button>
           </div>
         </form>
-      </div>
-
-      <div className="grid grid-cols-1 gap-6">
-        {
-          reviews?.length > 0 && reviews?.map(review=><ReviewSection key={review?._id} review={review} />)
-        }
       </div>
     </div>
   );
