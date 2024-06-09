@@ -3,21 +3,23 @@ import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import useBookingSessions from "../../../../hooks/useBookingSessions";
 
 
 const BookedSession = () => {
-const { user, loading } = useAuth();
-const axiosSecure = useAxiosSecure();
+  const {bookingSessions,bookingsSessionLoading,bookingRefetch} = useBookingSessions();
+// const { user, loading } = useAuth();
+// const axiosSecure = useAxiosSecure();
 
-const { data: bookingSessions = [], bookingsSessionLoading } = useQuery({
-  queryKey: ["bookingSession", user?.email],
-  enabled:
-    (!loading && !!user?.email) || !!localStorage.getItem("access-token"),
-  queryFn: async () => {
-    const { data } = await axiosSecure(`/bookingSession/${user?.email}`);
-    return data;
-  },
-});
+// const { data: bookingSessions = [], bookingsSessionLoading } = useQuery({
+//   queryKey: ["bookingSession", user?.email],
+//   enabled:
+//     (!loading && !!user?.email) || !!localStorage.getItem("access-token"),
+//   queryFn: async () => {
+//     const { data } = await axiosSecure(`/bookingSession/${user?.email}`);
+//     return data;
+//   },
+// });
 
 
 if (bookingsSessionLoading) return <LoadingSpinner/>
