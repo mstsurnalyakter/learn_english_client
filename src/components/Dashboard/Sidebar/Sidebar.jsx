@@ -11,10 +11,21 @@ import TutorNavLinks from "../Tutor/NavLinks/NavLinks";
 import AdminNavLinks from "../Admin/NavLinks/NavLinks";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
+import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 export const SideBarItem = () => {
+  const { user, logOut } = useAuth();
 
   const {role, isLoading} = useRole();
+    const handleLogOut = async () => {
+      try {
+         await  logOut();
+      } catch (error) {
+
+         toast.error(error.message)
+      }
+    };
 
   if (isLoading) return <LoadingSpinner/>
 
@@ -38,8 +49,8 @@ export const SideBarItem = () => {
             />
 
             {role === "student" && <NavLinks />}
-            {role === 'tutor' && <TutorNavLinks />}
-            {role === 'admin' && <AdminNavLinks />}
+            {role === "tutor" && <TutorNavLinks />}
+            {role === "admin" && <AdminNavLinks />}
           </ul>
         </div>
       </div>
@@ -47,25 +58,25 @@ export const SideBarItem = () => {
       <div>
         <div className="flex items-center p-2 mt-12 space-x-4 justify-self-end">
           <img
-            src="https://source.unsplash.com/100x100/?portrait"
+            src={user?.photoURL}
             alt=""
             className="w-12 h-12 rounded-lg dark:bg-gray-500"
           />
           <div>
-            <h2 className="text-lg font-semibold">Leroy Jenkins</h2>
+            <h2 className="text-lg font-semibold">{user?.displayName}</h2>
             <span className="flex items-center space-x-1">
-              <a
+              {/* <a
                 rel="noopener noreferrer"
                 href="#"
                 className="text-xs hover:underline dark:text-gray-600"
               >
                 View profile
-              </a>
+              </a> */}
             </span>
           </div>
         </div>
         {/* llllllllllllllllll */}
-        <div className="rounded-sm">
+        <div onClick={() => handleLogOut()} className="rounded-sm">
           <a
             rel="noopener noreferrer"
             href="#"
