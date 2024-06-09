@@ -15,6 +15,7 @@ import ViewAllMaterials from "../pages/Dashboard/Common/ViewAllMaterials/ViewAll
 import ViewAllStudySessions from "../pages/Dashboard/Tutor/ViewAllStudySessions/ViewAllStudySessions";
 import SessionDetail from "../pages/SessionDetail/SessionDetail";
 import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 
 
@@ -117,7 +118,9 @@ const router = createBrowserRouter([
         path: "view-all-users",
         element: (
           <PrivateRoute>
+            <AdminRoute>
             <ViewAllUsers />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -125,7 +128,9 @@ const router = createBrowserRouter([
         path: "view-all-study-session",
         element: (
           <PrivateRoute>
+            <AdminRoute>
             <ViewAllStudySession />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
