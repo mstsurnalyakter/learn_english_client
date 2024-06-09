@@ -42,6 +42,7 @@ const Row = ({ material, index, refetch }) => {
       toast.error(error.message);
     }
   };
+
   return (
     <tr>
       <th className="px-4 py-4 font-medium text-sm text-gray-700 ">
