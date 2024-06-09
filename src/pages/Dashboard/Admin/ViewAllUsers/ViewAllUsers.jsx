@@ -12,6 +12,8 @@ const ViewAllUsers = () => {
   const [users,setUsers] = useState([])
    const [currentPage, setCurrentPage] = useState(1);
    const [itemPerPage, setItemPerPage] = useState(5);
+     const [search, setSearch] = useState("");
+     const [searchText, setSearchText] = useState("");
     const [count, setCount] = useState(0);
     const numberOfPages = Math.ceil(count / itemPerPage);
     const pages = [...Array(numberOfPages).keys()].map(
@@ -26,11 +28,11 @@ const ViewAllUsers = () => {
       isError,
       error,
     } = useQuery({
-      queryKey: ["all-users", currentPage, itemPerPage],
+      queryKey: ["all-users", currentPage, itemPerPage, search],
       enabled: !!localStorage.getItem("access-token"),
       queryFn: async () => {
         const { data } = await axiosSecure(
-          `/all-users?page=${currentPage}&size=${itemPerPage}`
+          `/all-users?page=${currentPage}&size=${itemPerPage}&search=${search}`
         );
         setUsers(data);
         return data;
@@ -45,10 +47,10 @@ const ViewAllUsers = () => {
         isError: countIsError,
         error: countError,
       } = useQuery({
-        queryKey: ["users-count"],
+        queryKey: ["users-count",search],
         enabled: !!localStorage.getItem("access-token"),
         queryFn: async () => {
-          const { data } = await axiosSecure(`/users-count`);
+          const { data } = await axiosSecure(`/users-count?search=${search}`);
           setCount(data.count);
           return data;
         },
@@ -61,13 +63,54 @@ const ViewAllUsers = () => {
       toast.error(error.message);
     }
 
+
+
+    const handleSearch = (e) => {
+      e.preventDefault();
+      setSearch(searchText.trim());
+      setCurrentPage(1)
+      refetch();
+    };
+
+
      const handlePaginationButton = (value) => {
        console.log(value);
        setCurrentPage(value);
+       refetch()
      };
 
   return (
     <div>
+      <header>
+        <div className="w-full   object-cover bg-cover h-[140px]">
+          <div className="flex items-center justify-center w-full h-full bg-[#4D95EA]">
+            <div className="text-center">
+              <h1 className="text-3xl font-semibold text-white lg:text-4xl">
+                Search a User by Name or Email
+              </h1>
+
+              <form onSubmit={handleSearch} className="relative mt-4">
+                <input
+                  type="text"
+                  name="search"
+                  placeholder=" Search a User by Name or Email"
+                  className="py-3 outline-none w-full pl-3 rounded"
+                  id="search"
+                  onChange={(e) => setSearchText(e.target.value)}
+                  value={searchText}
+                />
+                <button
+                  type="submit"
+                  className="!absolute bg-[#4D95EA] text-white px-3 py-2 right-1 top-1 rounded"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </header>
+
       <section className="container px-4 mx-auto pt-12">
         <div className="flex items-center gap-x-3">
           <h2 className="text-lg font-medium text-gray-800 ">Study Session</h2>
