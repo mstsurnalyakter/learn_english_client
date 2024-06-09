@@ -24,8 +24,8 @@ const UploadMaterials = () => {
 
     const {
       data: approvedSessions = [],
-      approvedSessionsLoading,
-      approvedSessionsRefetch,
+      isLoading:approvedSessionsLoading,
+      refetch:approvedSessionsRefetch,
     } = useQuery({
       queryKey: ["approvedSessions", user?.email],
       enabled:

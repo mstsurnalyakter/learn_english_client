@@ -8,11 +8,11 @@ const useUsers = () => {
 
      const {
        data: users = [],
-       userLoading,
+       isLoading:userLoading,
        refetch,
      } = useQuery({
        queryKey: ["users"],
-       enabled:!!localStorage.getItem("access-token"),
+       enabled: !!localStorage.getItem("access-token"),
        queryFn: async () => {
          const { data } = await axiosSecure(`/users`);
          return data;
