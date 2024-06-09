@@ -2,21 +2,24 @@ import { useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 
 const CreateNote = () => {
   const {user} = useAuth();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
+   const [loading, setLoading] = useState(false);
    const [data, setData] = useState({
      description: "",
-     title:"",
+     title: "",
+     email: user?.email,
    });
 
    const handleSubmit = async (e) =>{
     e.preventDefault();
+     setLoading(true);
     const noteInfo = {
       ...data,
-      email: user?.email,
       date: new Date(),
     };
 
@@ -29,9 +32,11 @@ const CreateNote = () => {
         });
         toast.success("Note Save Successfully.")
         e.target.reset();
+         setLoading(false);
       }
     } catch (error) {
-      console.error(error);
+     toast.error(error.message);
+       setLoading(false);
     }
 
 
@@ -48,6 +53,12 @@ const CreateNote = () => {
               name="email"
               id="email"
               value={user?.email}
+              onChange={(event) =>
+                setData((prevData) => ({
+                  ...prevData,
+                  email: event.target.value,
+                }))
+              }
               readOnly
               className="p-4 rounded-md border-2 dark:text-gray-800  dark:bg-gray-50 outline-none flex-grow"
             />
@@ -89,7 +100,11 @@ const CreateNote = () => {
 
         <div className="flex justify-end">
           <button className="px-3 py-2 bg-[#4D95EA] text-white" type="submit">
-            Save Note
+            {loading ? (
+              <TbFidgetSpinner className="animate-spin m-auto" />
+            ) : (
+              "Save Note"
+            )}
           </button>
         </div>
       </form>
