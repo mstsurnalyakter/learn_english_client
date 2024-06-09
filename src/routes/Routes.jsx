@@ -16,6 +16,7 @@ import ViewAllStudySessions from "../pages/Dashboard/Tutor/ViewAllStudySessions/
 import SessionDetail from "../pages/SessionDetail/SessionDetail";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import TutorRoute from "./TutorRoute";
 
 
 
@@ -93,7 +94,9 @@ const router = createBrowserRouter([
         path: "create-study-session",
         element: (
           <PrivateRoute>
-            <CreateStudySession />
+            <TutorRoute>
+              <CreateStudySession />
+            </TutorRoute>
           </PrivateRoute>
         ),
       },
@@ -101,7 +104,9 @@ const router = createBrowserRouter([
         path: "upload-materials",
         element: (
           <PrivateRoute>
-            <UploadMaterials />
+            <TutorRoute>
+              <UploadMaterials />
+            </TutorRoute>
           </PrivateRoute>
         ),
       },
@@ -109,7 +114,9 @@ const router = createBrowserRouter([
         path: "view-all-study-sessions",
         element: (
           <PrivateRoute>
+            <TutorRoute>
             <ViewAllStudySessions />
+            </TutorRoute>
           </PrivateRoute>
         ),
       },
@@ -119,7 +126,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AdminRoute>
-            <ViewAllUsers />
+              <ViewAllUsers />
             </AdminRoute>
           </PrivateRoute>
         ),
@@ -129,7 +136,7 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AdminRoute>
-            <ViewAllStudySession />
+              <ViewAllStudySession />
             </AdminRoute>
           </PrivateRoute>
         ),
