@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import useAxiosCommon from "../../hooks/useAxiosCommon";
 import ReviewSection from "./ReviewSection";
 import LoadingSpinner from "../Shared/LoadingSpinner/LoadingSpinner";
 import useReviews from "../../hooks/useReviews";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Review = ({ id, user, tutorInfo }) => {
-  const axiosCommon = useAxiosCommon();
+  const axiosSecure = useAxiosSecure;
   const {reviews,reviewLoading,reviewRefetch} = useReviews(id);
 
   const [data, setData] = useState({
@@ -32,7 +32,7 @@ const Review = ({ id, user, tutorInfo }) => {
     };
 
     try {
-      const response = await axiosCommon.post("/review", reviewInfo);
+      const response = await axiosSecure.post("/review", reviewInfo);
       if (response.data?.insertedId) {
         reviewRefetch();
         setData({

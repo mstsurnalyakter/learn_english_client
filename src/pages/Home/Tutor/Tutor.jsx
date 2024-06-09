@@ -10,8 +10,8 @@ const Tutor = () => {
 
       const {
         data:tutors = [],
-        tutorsLoading,
-        tutorsRefetch,
+        isLoading:tutorsLoading,
+        refetch:tutorsRefetch,
       } = useQuery({
         queryKey: ["tutors"],
         queryFn: async () => {
