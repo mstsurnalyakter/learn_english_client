@@ -3,10 +3,12 @@ import toast from 'react-hot-toast';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import { useState } from 'react';
 import UpdateModal from './UpdateModal';
+import RejectionModal from './RejectionModal';
 
 const Row = ({ session, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
   let [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  let [isRejectionModal, setIsRejectionModal] = useState(false);
   // handleStatus
   const handleStatus = async (id, prevStatus, status) => {
     if (prevStatus === status)
@@ -102,10 +104,7 @@ const Row = ({ session, index, refetch }) => {
           {/* Reject Button */}
           <button
             title="Reject the Session"
-            onClick={() =>
-              handleStatus(session?._id, session?.status, "rejected")
-            }
-            // disabled={session?.status === "Complete"}
+            onClick={() => setIsRejectionModal(true)}
             className="disabled:cursor-not-allowed text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
           >
             <svg
@@ -123,6 +122,13 @@ const Row = ({ session, index, refetch }) => {
               />
             </svg>
           </button>
+          <RejectionModal
+            isOpen={isRejectionModal}
+            refetch={refetch}
+            setIsRejectionModal={setIsRejectionModal}
+            session={session}
+            handleStatus={handleStatus}
+          />
         </div>
       </td>
     </tr>
