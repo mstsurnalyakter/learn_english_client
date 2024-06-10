@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useStudySession from "../../../../hooks/useStudySession";
 import { IoIosGitPullRequest } from "react-icons/io";
 import LoadingSpinner from "../../../../components/Shared/LoadingSpinner/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const ViewAllStudySessions = () => {
   const axiosSecure = useAxiosSecure();
@@ -124,33 +125,57 @@ const ViewAllStudySessions = () => {
                           </td>
 
                           <td className="px-4 py-4 text-sm font-medium text-gray-700">
-                            <div
-                              className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
-                                session?.status === "pending" &&
-                                "bg-yellow-100 text-yellow-900"
-                              } ${
-                                session?.status === "approved" &&
-                                "bg-green-100 text-green-900"
-                              }${
-                                session?.status === "rejected" &&
-                                "bg-red-100 text-red-900"
-                              }`}
-                            >
-                              <span
-                                className={`h-1.5 w-1.5 rounded-full ${
+                            {session?.status === "rejected" ? (
+                              <button
+                                className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2  ${
+                                  session?.status === "rejected" &&
+                                  "bg-red-100 text-red-900"
+                                }`}
+                              >
+                                <Link
+                                  to={`/dashboard/rejection-info/${session?._id}`}
+                                >
+                                  <span
+                                    className={`h-1.5 w-1.5 rounded-full ${
+                                      session?.status === "rejected" &&
+                                      "bg-red-900"
+                                    }`}
+                                  ></span>
+                                  <h2 className="text-sm font-normal">
+                                    {session?.status}
+                                  </h2>
+                                </Link>
+                              </button>
+                            ) : (
+                              <div
+                                className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${
                                   session?.status === "pending" &&
-                                  "bg-yellow-900"
-                                }${
-                                  session?.status === "approved" &&
-                                  "bg-green-900"
+                                  "bg-yellow-100 text-yellow-900"
                                 } ${
-                                  session?.status === "rejected" && "bg-red-900"
-                                } `}
-                              ></span>
-                              <h2 className="text-sm font-normal ">
-                                {session?.status}
-                              </h2>
-                            </div>
+                                  session?.status === "approved" &&
+                                  "bg-green-100 text-green-900"
+                                }${
+                                  session?.status === "rejected" &&
+                                  "bg-red-100 text-red-900"
+                                }`}
+                              >
+                                <span
+                                  className={`h-1.5 w-1.5 rounded-full ${
+                                    session?.status === "pending" &&
+                                    "bg-yellow-900"
+                                  }${
+                                    session?.status === "approved" &&
+                                    "bg-green-900"
+                                  } ${
+                                    session?.status === "rejected" &&
+                                    "bg-red-900"
+                                  } `}
+                                ></span>
+                                <h2 className="text-sm font-normal ">
+                                  {session?.status}
+                                </h2>
+                              </div>
+                            )}
                           </td>
 
                           <td className="px-4 py-4 text-sm">

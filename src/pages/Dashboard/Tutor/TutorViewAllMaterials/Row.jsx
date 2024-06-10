@@ -81,20 +81,6 @@ const Row = ({ material, index, refetch }) => {
           {material?.link.slice(0, 20)}...
         </a>
       </td>
-
-      {/* <td className="px-4 py-4 text-lg space-x-2">
-        <button
-          onClick={() => handleDelete(material?._id)}
-          className="text-red-600"
-        >
-          <MdDelete />
-        </button>
-        <Link to={`/dashboard/update/${material?._id}`}>
-          <button className="text-[#0f67cc] ">
-            <BiSolidEdit />
-          </button>
-        </Link>
-      </td> */}
       <td className="px-4 py-4 text-lg space-x-2">
         <button
           onClick={() => handleDelete(material?._id)}

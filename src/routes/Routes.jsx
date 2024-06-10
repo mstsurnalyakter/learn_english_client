@@ -18,6 +18,8 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import TutorRoute from "./TutorRoute";
 import BookedSessionDetail from "../pages/Dashboard/Student/BookedSession/BookedSessionDetail";
+import RejectionInfo from "../pages/Dashboard/Tutor/ViewAllStudySessions/RejectionInfo";
+// import RejectionInfo from "../pages/Dashboard/Tutor/ViewAllStudySessions/RejectionInfo";
 
 
 
@@ -105,6 +107,16 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <TutorRoute>
               <CreateStudySession />
+            </TutorRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "rejection-info/:id",
+        element: (
+          <PrivateRoute>
+            <TutorRoute>
+              <RejectionInfo />
             </TutorRoute>
           </PrivateRoute>
         ),
