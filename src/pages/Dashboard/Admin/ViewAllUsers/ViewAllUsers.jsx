@@ -234,8 +234,10 @@ const ViewAllUsers = () => {
             key={btnNum}
             onClick={() => handlePaginationButton(btnNum)}
             className={`hidden ${
-              currentPage === btnNum ? "bg-[#2686f5] text-white " : ""
-            } px-4 py-2 mx-1 transition-colors duration-300 dark:text-gray-100  transform  rounded-md sm:inline bg-[#94c0f2]  text-white`}
+              currentPage === btnNum
+                ? "bg-[#0476f9] text-white"
+                : "bg-[#8abaf1]  text-white"
+            } px-4 py-2 mx-1 transition-colors duration-300 dark:text-gray-100  transform  rounded-md sm:inline`}
           >
             {btnNum}
           </button>

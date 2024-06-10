@@ -11,7 +11,7 @@ const ViewAllStudySessions = () => {
 
   // handleStatus
   const handleStatus = async (id) => {
-    const { data } = await axiosSecure.patch(`/study-session/${id}`, {
+    const { data } = await axiosSecure.patch(`/all-study-session/${id}`, {
       status: "pending",
     });
     if (data?.modifiedCount > 0) {

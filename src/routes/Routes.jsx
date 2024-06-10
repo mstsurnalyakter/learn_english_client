@@ -19,6 +19,7 @@ import AdminRoute from "./AdminRoute";
 import TutorRoute from "./TutorRoute";
 import BookedSessionDetail from "../pages/Dashboard/Student/BookedSession/BookedSessionDetail";
 import RejectionInfo from "../pages/Dashboard/Tutor/ViewAllStudySessions/RejectionInfo";
+import Materials from "../pages/Dashboard/Student/StudentViewAllMaterials/Materials";
 // import RejectionInfo from "../pages/Dashboard/Tutor/ViewAllStudySessions/RejectionInfo";
 
 
@@ -81,6 +82,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <BookedSessionDetail />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "materials/:id",
+        element: (
+          <PrivateRoute>
+            <Materials />
           </PrivateRoute>
         ),
       },

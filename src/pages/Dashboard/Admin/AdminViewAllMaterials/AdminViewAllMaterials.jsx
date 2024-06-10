@@ -13,6 +13,7 @@ const AdminViewAllMaterials = () => {
   const axiosSecure = useAxiosSecure();
      const [currentPage, setCurrentPage] = useState(1);
      const [itemPerPage, setItemPerPage] = useState(5);
+     const [materials,setMaterials] = useState();
      const [count, setCount] = useState(0);
      const numberOfPages = Math.ceil(count / itemPerPage);
      const pages = [...Array(numberOfPages).keys()].map(
@@ -21,7 +22,7 @@ const AdminViewAllMaterials = () => {
 
 
   const {
-    data: materials = [],
+    data: materials2 = [],
     isLoading: materialsLoading,
     refetch: materialsRefetch,
     isError,
@@ -33,6 +34,7 @@ const AdminViewAllMaterials = () => {
       const { data } = await axiosSecure(
         `/allMaterials?page=${currentPage}&size=${itemPerPage}`
       );
+      setMaterials(data)
       return data;
     },
   });
@@ -77,7 +79,18 @@ const AdminViewAllMaterials = () => {
               text: "Material has been removed.",
               icon: "success",
             });
+
+
             materialsRefetch();
+            // countRefetch();
+            // Update local state directly to remove deleted material
+            const updatedMaterials = materials.filter(
+              (material) => material._id !== id
+            );
+            setMaterials(updatedMaterials);
+            setCount((prevCount) => prevCount - 1);
+            // Optionally, you can refetch count to keep it in sync
+            countRefetch();
           }
         }
       } catch (error) {
@@ -99,7 +112,7 @@ const AdminViewAllMaterials = () => {
   };
 
   return (
-    <div>
+    <div className="mb-10">
       <section className="container px-4 mx-auto pt-12">
         <div className="flex items-center gap-x-3">
           <h2 className="text-lg font-medium text-gray-800 ">Study material</h2>
@@ -259,8 +272,10 @@ const AdminViewAllMaterials = () => {
             key={btnNum}
             onClick={() => handlePaginationButton(btnNum)}
             className={`hidden ${
-              currentPage === btnNum ? "bg-[#2686f5] text-white " : ""
-            } px-4 py-2 mx-1 transition-colors duration-300 dark:text-gray-100  transform  rounded-md sm:inline bg-[#94c0f2]  text-white`}
+              currentPage === btnNum
+                ? "bg-[#0372f2] text-white"
+                : "bg-[#8abaf1]  text-white"
+            } px-4 py-2 mx-1 transition-colors duration-300 dark:text-gray-100  transform  rounded-md sm:inline`}
           >
             {btnNum}
           </button>

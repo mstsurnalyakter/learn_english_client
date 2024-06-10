@@ -26,7 +26,7 @@ const SessionDetail = () => {
   // averageRating
 
   const sum = reviews.reduce((sum, review) => sum + review?.rating, 0);
-  const averageRating = sum / reviews?.length;
+  const averageRating = parseFloat((sum / reviews?.length).toPrecision(2));
 
   const closeModal = () => {
     setIsOpen(false);
@@ -147,6 +147,7 @@ const SessionDetail = () => {
         <p>
           <b>Description:</b> {sessionDescription}
         </p>
+
         <button
           onClick={() => (registrationFee > 0 ? setIsOpen(true) : handleBook())}
           disabled={
@@ -157,7 +158,7 @@ const SessionDetail = () => {
           }
           className="px-4 w-full py-2 mt-4 disabled:cursor-not-allowed rounded  bg-[#4D95EA] text-white font-semibold"
         >
-          Book Now
+          {checkStartDate && checkEndDate ? "Book Now" : "Registration Closed"}
         </button>
         {/* modal */}
         <BookingModal
@@ -171,8 +172,10 @@ const SessionDetail = () => {
           }}
         />
       </div>
-      <div>
-        <h3 className="text-center mb-10 font-bold text-2xl mt-16">Student Reviews</h3>
+      <div className="dark:text-white">
+        <h3 className="text-center mb-10 font-bold text-2xl mt-16">
+          Student Reviews
+        </h3>
         <div className="grid grid-cols-1 gap-6">
           {reviews?.length > 0 &&
             reviews?.map((review) => (
@@ -180,7 +183,6 @@ const SessionDetail = () => {
             ))}
         </div>
       </div>
-     
     </div>
   );
 };

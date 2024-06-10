@@ -7,8 +7,8 @@ const Home = () => {
   return (
     <div className="space-y-20 dark:text-gray-100">
       <Banner/>
-      <Tutor/>
       <StudySession/>
+      <Tutor/>
     </div>
   );
 }

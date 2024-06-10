@@ -18,7 +18,7 @@ const BookedSessionDetail = () => {
   // averageRating
 
   const sum = reviews.reduce((sum, review) => sum + review?.rating, 0);
-  const averageRating = sum / reviews?.length;
+  const averageRating = parseFloat((sum / reviews?.length).toPrecision(2));
 
 
 

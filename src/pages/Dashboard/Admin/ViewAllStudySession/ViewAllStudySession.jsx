@@ -64,7 +64,7 @@ const ViewAllStudySession = () => {
                         scope="col"
                         className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-[#4D95EA]"
                       >
-                        Registration Date
+                        <span>Registration Date</span>
                       </th>
 
                       <th
@@ -88,7 +88,6 @@ const ViewAllStudySession = () => {
                           key={session?._id}
                           refetch={refetch}
                         />
-
                       ))}
                   </tbody>
                 </table>

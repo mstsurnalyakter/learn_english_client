@@ -84,9 +84,9 @@ const CreateStudySession = () => {
    };
 
    return (
-     <div className=" border border-[#4D95EA]">
+     <div className="border-2 rounded">
        <DynamicTitle pageTitle="Create Study Session" />
-       <div className="shadow-lg  p-5  bg-[#4D95EA] text-gray-800 font-medium">
+       <div className="shadow-lg  p-5  text-gray-800 font-medium">
          {/* Heading */}
          <div className="mt-5 mb-8">
            <p className="flex items-center justify-center text-3xl font-bold ">
@@ -268,16 +268,10 @@ const CreateStudySession = () => {
                className="textarea textarea-bordered border-2 p-2 rounded-md w-full focus:outline-[#4D95EA]"
              ></textarea>
            </div>
-
-           {/* <input
-             className="px-4 w-full py-2 mt-4 cursor-pointer rounded  bg-[#E3B342]"
-             type="submit"
-             value="Create Study Session"
-           /> */}
            <button
              disabled={loading}
              type="submit"
-             className="px-4 w-full py-2 mt-4 cursor-pointer rounded  bg-[#E3B342]"
+             className="px-4 w-full py-2 mt-4 cursor-pointer rounded  bg-[#4D95EA] text-white"
            >
              {loading ? (
                <TbFidgetSpinner className="animate-spin m-auto" />
