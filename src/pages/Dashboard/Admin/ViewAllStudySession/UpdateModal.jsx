@@ -34,10 +34,10 @@ const UpdateModal = ({
         }
       );
       handleStatus(session?._id, session?.status, "approved");
+      setIsEditModalOpen(false);
       if (data?.modifiedCount > 0) {
          toast.success("Registration Fee updated successfully.");
          refetch();
-         setIsEditModalOpen(false);
       }
 
     } catch (error) {

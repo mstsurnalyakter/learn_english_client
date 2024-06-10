@@ -39,10 +39,10 @@ const RejectionModal = ({
 
 
       handleStatus(session?._id, session?.status, "rejected");
+      setIsRejectionModal(false);
       if (data?.modifiedCount > 0) {
         toast.success("Reject Session successfully.");
         refetch();
-        setIsRejectionModal(false);
       }
     } catch (error) {
       console.error("Error approving session:", error);
