@@ -184,7 +184,7 @@ const SingUp = () => {
                 <option value="">Select Role</option>
                 <option value="student">Student</option>
                 <option value="tutor">Tutor</option>
-                <option value="admin">Admin</option>
+                {/* <option value="admin">Admin</option> */}
               </select>
             </div>
             <div className="mt-4">
