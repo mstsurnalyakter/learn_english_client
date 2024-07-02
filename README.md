@@ -1,10 +1,8 @@
 # LearnEnglish
 
-## Admin Details
-- **UserName:** mst-surnaly-akter
-- **Email:** surnaly22@gmail.com
-- **Password:** Pa$$w0rd!
 - **Live Site URL:** [LearnEnglish](https://learn-english-e286d.web.app)
+
+- **Server Site Repository:** [Server](https://github.com/mstsurnalyakter/learn_english_server)
 
 ## Features
 1. **User Registration:** Users can sign up as students, tutors, or administrators.
@@ -65,9 +63,10 @@ VITE_APPID=
 VITE_IMGBB_API_KEY=
 VITE_STRIPE_PUBLISHABLE_KEY=
 VITE_API_URL=
+```
 
 ### Run the client:
 
-     ```sh
+```sh
     npm run dev
-    ```
+```
