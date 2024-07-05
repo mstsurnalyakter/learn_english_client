@@ -26,15 +26,7 @@ const Materials = () => {
       return data;
     },
   });
-  console.log(myMaterials);
 
-//   const filterMaterials = myMaterials.filter((material) =>
-//     bookingSessions.some((session) => session.sessionID === material.sessionID)
-//   );
-
-//   if (myMaterialsLoading || bookingsSessionLoading) {
-//     return <LoadingSpinner />;
-//   }
 
   return (
     <section className="container px-4 mx-auto pt-12">
