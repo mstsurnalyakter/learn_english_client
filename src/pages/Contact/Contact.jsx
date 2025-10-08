@@ -27,7 +27,7 @@ const Contact = () => {
     <div className="pb-16">
       <header className="bg-gradient-to-r from-indigo-50 to-white dark:from-slate-900 dark:to-slate-800">
         <div className="max-w-6xl mx-auto px-6 py-20 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white">Contact the Team</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 ">Contact the Team</h1>
           <p className="mt-4 text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Have a question or suggestion? Drop us a message and we&#39;ll get back to you within 1-2 working days.
           </p>
@@ -43,18 +43,18 @@ const Contact = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">Name</label>
-                <input name="name" value={form.name} onChange={handleChange} className="mt-1 block w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" />
+                <input name="name" value={form.name} onChange={handleChange} className="mt-1 block w-full rounded-md border-2 outline-none px-3 py-2" />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">Email</label>
-                <input name="email" value={form.email} onChange={handleChange} className="mt-1 block w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" />
+                <input name="email" value={form.email} onChange={handleChange} className="mt-1 block w-full rounded-md border-2 outline-none px-3 py-2" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">Message</label>
-              <textarea name="message" value={form.message} onChange={handleChange} rows={6} className="mt-1 block w-full rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2" />
+              <textarea name="message" value={form.message} onChange={handleChange} rows={6} className="mt-1 block w-full rounded-md  border-2   outline-none px-3 py-2" />
             </div>
 
             <div className="flex items-center gap-3">
