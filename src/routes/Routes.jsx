@@ -21,6 +21,9 @@ import BookedSessionDetail from "../pages/Dashboard/Student/BookedSession/Booked
 import RejectionInfo from "../pages/Dashboard/Tutor/ViewAllStudySessions/RejectionInfo";
 import Materials from "../pages/Dashboard/Student/StudentViewAllMaterials/Materials";
 // import RejectionInfo from "../pages/Dashboard/Tutor/ViewAllStudySessions/RejectionInfo";
+import Blog from "../pages/Blog/Blog";
+import BlogDetail from "../pages/Blog/BlogDetail";
+import Resources from "../pages/Resources/Resources";
 
 
 
@@ -48,6 +51,18 @@ const router = createBrowserRouter([
             <SessionDetail />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogDetail />,
+      },
+      {
+        path: "/resources",
+        element: <Resources />,
       },
     ],
   },

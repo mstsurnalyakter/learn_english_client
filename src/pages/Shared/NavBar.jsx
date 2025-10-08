@@ -29,9 +29,8 @@ const NavBar = () => {
 
 
 
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "system");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const element = document.documentElement;
-  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   const options = [
     {
@@ -42,22 +41,7 @@ const NavBar = () => {
       icon: "moon",
       text: "dark",
     },
-    {
-      icon: "desktop-outline",
-      text: "system",
-    },
   ];
-
-  const onWindowMatch = () => {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) && darkQuery.matches)
-    ) {
-      element.classList.add("dark");
-    } else {
-      element.classList.remove("dark");
-    }
-  };
 
   useEffect(() => {
     switch (theme) {
@@ -66,25 +50,12 @@ const NavBar = () => {
         localStorage.setItem("theme", "dark");
         break;
       case "light":
+      default:
         element.classList.remove("dark");
         localStorage.setItem("theme", "light");
         break;
-      default:
-        localStorage.removeItem("theme");
-        onWindowMatch();
-        break;
     }
-  }, [theme]);
-
-  darkQuery.addEventListener("change", (e) => {
-    if (!("theme" in localStorage)) {
-      if (e.matches) {
-        element.classList.add("dark");
-      } else {
-        element.classList.remove("dark");
-      }
-    }
-  });
+  }, [theme, element]);
 
   useEffect(() => {
     window.addEventListener(
@@ -114,10 +85,25 @@ const NavBar = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "bg-[#4D95EA] px-3 py-1  text-white flex items-center justify-center  rounded-lg"
-                        : "p-2 text-[#131313CC]"
+                        : "p-2 text-[#131313CC] hover:text-[#4D95EA]"
                     }
                   >
                     Home
+                  </NavLink>
+                  <NavLink to={"/about"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                    About
+                  </NavLink>
+                  <NavLink to={"/blog"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                    Blog
+                  </NavLink>
+                  <NavLink to={"/resources"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                    Resources
+                  </NavLink>
+                  <NavLink to={"/tutors"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                    Tutors
+                  </NavLink>
+                  <NavLink to={"/contact"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                    Contact
                   </NavLink>
                   {user && (
                     <>
@@ -220,10 +206,25 @@ const NavBar = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "bg-[#4D95EA] px-3 py-1  text-white  rounded-lg"
-                      : "p-2 text-[#131313CC]"
+                      : "p-2 text-[#131313CC] hover:text-[#4D95EA]"
                   }
                 >
                   Home
+                </NavLink>
+                <NavLink to={"/about"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                  About
+                </NavLink>
+                <NavLink to={"/blog"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                  Blog
+                </NavLink>
+                <NavLink to={"/resources"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                  Resources
+                </NavLink>
+                <NavLink to={"/tutors"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                  Tutors
+                </NavLink>
+                <NavLink to={"/contact"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                  Contact
                 </NavLink>
                 {user && (
                   <>

@@ -12,7 +12,7 @@ const Home = () => {
       <section className="relative">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-6">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-gray-800">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight ">
               Learn English with Expert Tutors
             </h1>
             <p className="text-base sm:text-lg  max-w-2xl">
