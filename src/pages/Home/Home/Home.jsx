@@ -3,6 +3,7 @@ import StudySession from "../StudySession/StudySession";
 import Tutor from "../Tutor/Tutor";
 import HowItWorks from "../HowItWorks/HowItWorks";
 import Testimonials from "../Testimonials/Testimonials";
+import Faq from "../HowItWorks/Faq";
 
 
 const Home = () => {
@@ -76,6 +77,7 @@ const Home = () => {
 
       {/* Sections - keep existing components but wrapped with anchors and spacing */}
       <main className="max-w-7xl mx-auto px-6 lg:px-8 space-y-20 py-12">
+      
         <section id="sessions">
           <StudySession />
         </section>
@@ -88,6 +90,8 @@ const Home = () => {
         {/* Extra sections */}
   <Testimonials />
   <HowItWorks />
+  <Faq/>
+  
     </div>
   );
 }

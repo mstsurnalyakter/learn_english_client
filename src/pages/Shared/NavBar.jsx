@@ -65,7 +65,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div className="shadow-lg sticky top-0 z-50 dark:bg-slate-900 duration-100">
+    <div className="shadow sticky top-0 z-50 dark:bg-slate-900 duration-100">
       <Navbar className="mx-auto max-w-7xl  shadow-none rounded-none px-3 lg:px-2 pt-4  mb-6 lg:py-5">
         <div className="flex items-center justify-between">
           <Typography className="mr-4 cursor-pointer py-1.5 lg:ml-2 flex items-center">
@@ -90,17 +90,14 @@ const NavBar = () => {
                   >
                     Home
                   </NavLink>
-                  <NavLink to={"/about"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
-                    About
-                  </NavLink>
-                  <NavLink to={"/blog"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                    <NavLink to={"/blog"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
                     Blog
                   </NavLink>
                   <NavLink to={"/resources"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
                     Resources
                   </NavLink>
-                  <NavLink to={"/tutors"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
-                    Tutors
+                  <NavLink to={"/about"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                    About
                   </NavLink>
                   <NavLink to={"/contact"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
                     Contact
@@ -211,18 +208,16 @@ const NavBar = () => {
                 >
                   Home
                 </NavLink>
-                <NavLink to={"/about"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
-                  About
-                </NavLink>
                 <NavLink to={"/blog"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
                   Blog
                 </NavLink>
                 <NavLink to={"/resources"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
                   Resources
                 </NavLink>
-                <NavLink to={"/tutors"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
-                  Tutors
+                <NavLink to={"/about"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
+                  About
                 </NavLink>
+                
                 <NavLink to={"/contact"} className={({ isActive }) => isActive ? "bg-[#4D95EA] px-3 py-1 text-white rounded-lg" : "p-2 text-[#131313CC] hover:text-[#4D95EA]"}>
                   Contact
                 </NavLink>

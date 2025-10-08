@@ -24,6 +24,8 @@ import Materials from "../pages/Dashboard/Student/StudentViewAllMaterials/Materi
 import Blog from "../pages/Blog/Blog";
 import BlogDetail from "../pages/Blog/BlogDetail";
 import Resources from "../pages/Resources/Resources";
+import Contact from "../pages/Contact/Contact";
+import About from "../pages/About/About";
 
 
 
@@ -57,8 +59,16 @@ const router = createBrowserRouter([
         element: <Blog />,
       },
       {
+        path: "/about",
+        element: <About />,
+      },
+      {
         path: "/blog/:id",
         element: <BlogDetail />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/resources",
