@@ -11,7 +11,6 @@ const Tutor = () => {
       const {
         data:tutors = [],
         isLoading:tutorsLoading,
-        refetch:tutorsRefetch,
       } = useQuery({
         queryKey: ["tutors"],
         queryFn: async () => {
@@ -24,18 +23,23 @@ const Tutor = () => {
 
   return (
     <div className="space-y-10">
-      <div className="w-1/2 mx-auto text-center space-y-3">
-        <h2 className="text-center font-bold text-2xl">Our Tutors</h2>
-        <p>
-          100% of tutors on our platform are native English speakers. They are
-          all experts at teaching the LearnEnglish curriculum. Many hold
-          graduate degrees from top universities in the US, UK, and Canada. We
-          are continually impressed by our tutors, and we think you will be too!
+      <div className="max-w-3xl mx-auto text-center space-y-3 px-4">
+        <h2 className="font-bold text-2xl">Our Tutors</h2>
+        <p className="text-sm ">
+          All tutors on our platform are experienced and ready to help you
+          reach your language goals. Browse profiles and pick the tutor who
+          matches your learning style.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {tutors?.length > 0 &&
-          tutors?.map((user) => <TutorCard user={user} key={user?._id} />)}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+        {tutors?.length > 0 ? (
+          tutors?.map((user) => <TutorCard user={user} key={user?._id} />)
+        ) : (
+          <div className="col-span-full py-12 text-center text-gray-500 dark:text-gray-400">
+            No tutors found right now. Please check back later.
+          </div>
+        )}
       </div>
     </div>
   );

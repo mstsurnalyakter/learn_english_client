@@ -8,45 +8,32 @@ const SessionCard = ({session}) => {
   const checkEndDate = new Date(session?.registrationEndDate) >= new Date();
 
   return (
-    <div>
-      <div className="w-full rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800 border-2 p-3">
+    <article className="bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-md hover:shadow-xl transform hover:-translate-y-1 transition">
+      <div className="relative">
         <img
           src={session?.imageURL}
-          alt=""
-          className="object-cover object-center w-full rounded-t-md  dark:bg-gray-500"
+          alt={session?.sessionTitle || 'Session image'}
+          className="w-full h-48 object-cover"
         />
-        <div className="flex flex-col justify-between p-6 space-y-8">
-          <div className="space-y-2 flex-grow">
-            <h2 className="text-lg font-medium">{session?.sessionTitle}</h2>
-            <p
-              title={session?.sessionDescription}
-              className="dark:text-gray-800 text-sm"
-            >
-              {session?.sessionDescription.slice(0, 150)}....
-            </p>
-          </div>
-          <div>
-            {checkStartDate && checkEndDate ? (
-              <button className="px-3 py-2 bg-green-100 text-green-900 rounded">
-                ongoing
-              </button>
-            ) : (
-              <button className="px-3 py-2 bg-red-100 text-red-900 rounded">
-                closed
-              </button>
-            )}
-          </div>
-          <Link to={`/sessionDetail/${session?._id}`}>
-            <button
-              type="button"
-              className="flex items-center bg-[#4D95EA] text-white hover:bg-[#358ef4]  justify-center w-full p-3 font-semibold tracking-wide rounded-md dark:bg-violet-600 dark:text-gray-50"
-            >
-              Read More
-            </button>
+        <div className="absolute top-3 left-3">
+          <span className={`px-3 py-1 rounded-full text-sm font-medium ${checkStartDate && checkEndDate ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            {checkStartDate && checkEndDate ? 'Ongoing' : 'Closed'}
+          </span>
+        </div>
+      </div>
+
+      <div className="p-5 flex flex-col gap-4">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{session?.sessionTitle}</h3>
+        <p className="text-sm text-gray-600 line-clamp-3" title={session?.sessionDescription}>{session?.sessionDescription}</p>
+
+        <div className="mt-2 flex items-center justify-between gap-4">
+          <div className="text-sm text-gray-500">Seats: <span className="font-medium text-gray-800 dark:text-gray-200">{session?.seats || '—'}</span></div>
+          <Link to={`/sessionDetail/${session?._id}`} className="ml-auto">
+            <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700">View Details</button>
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const ReviewSection = ({review}) => {
   return (
-    <div className="grid col-span-1  md:grid-cols-12 border-b-2 pb-5">
+    <div className="grid col-span-1  md:grid-cols-12 border-b pb-5">
       <div className="md:col-span-1 col-span-1">
         <img
           alt=""
@@ -11,7 +11,7 @@ const ReviewSection = ({review}) => {
           src={review?.studentPhoto}
         />
       </div>
-      <div className="md:col-span-9 col-span-1">
+      <div className="md:col-span-9 col-span-1 dark:text-gray-200">
         <h3>{review?.studentName}</h3>
         <p>{review?.studentEmail}</p>
         <p>{review?.review}</p>
